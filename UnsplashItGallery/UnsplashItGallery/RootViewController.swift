@@ -12,6 +12,8 @@ import Alamofire
 let kWidth = UIScreen.mainScreen().bounds.size.width
 let kHeight = UIScreen.mainScreen().bounds.size.height
 
+private let kPullUpOffset:CGFloat = 50.0
+
 let kCellID = "imageCell"
 let BaseUrl = "https://unsplash.it/list"
 
@@ -20,45 +22,43 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     @IBOutlet weak var tableView: UITableView!
     
+    var jsonArray:[AnyObject]?
     var imagesList:[ImageModel]?
     
     var numberOfPage = 0
     var pageImagesCount = 10
     
     
-    var jsonArray:[AnyObject]?
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         //Add pullToRefresh
         let loadingView = DGElasticPullToRefreshLoadingViewCircle()
         loadingView.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
         tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
-            // Add your logic here
-            // Do not forget to call dg_stopLoading() at the end
-            
-//            self!.getLatestData()
-            
+            self!.getLatestData()
             self?.tableView.dg_stopLoading()
-            
             }, loadingView: loadingView)
         tableView.dg_setPullToRefreshFillColor(UIColor(red: 57/255.0, green: 67/255.0, blue: 89/255.0, alpha: 1.0))
         tableView.dg_setPullToRefreshBackgroundColor(tableView.backgroundColor!)
         
         
-        jsonArray = [AnyObject]()
-        
         //获得所有json数据
         getLatestData()
     }
     
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+    //MARK: - Fetch Data
     func getLatestData(){
         //Http Request
         Alamofire.request(.GET, BaseUrl, parameters: nil)
             .responseJSON { response in
+                self.jsonArray = [AnyObject]()
                 if let JSON : [AnyObject] = response.result.value as? [AnyObject]{
                     self.jsonArray = JSON
                 }
@@ -90,21 +90,15 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    //MARK: - Pull Up Refresh
+    //MARK: - Pull Up Refresh - add Old Data
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if scrollView.contentOffset.y + scrollView.frame.size.height - 50 > scrollView.contentSize.height{
+        if scrollView.contentOffset.y + scrollView.frame.size.height - kPullUpOffset > scrollView.contentSize.height{
                 print("load more")
             //加载更旧的数据10条
             if numberOfPage != 0{
                 loadTenOldData()
             }
         }
-        
     }
     
     //MARK: - TableView Delegate
@@ -138,13 +132,17 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.performSegueWithIdentifier("detailSegue", sender: nil)
+        self.performSegueWithIdentifier("detailSegue", sender: indexPath)
     }
     
     
     //MARK: - Switch Controller
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
+        if segue.identifier == "detailSegue"{
+            let detail = segue.destinationViewController as! DetailViewController
+            let indexPath = sender as! NSIndexPath
+            detail.imageModel = self.imagesList?[indexPath.row]
+        }
     }
 
     
