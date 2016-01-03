@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  UnsplashItGallery
+
+  Created by WangHong on 16/1/3.
+  Copyright © 2016年 WangHong. All rights reserved.
+*/
+
+"noNetwork" = "无网络连接";

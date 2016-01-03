@@ -12,7 +12,6 @@ class RootNavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
 
@@ -20,6 +19,7 @@ class RootNavigationController: UINavigationController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     
     //MARK: - Others Setting
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {

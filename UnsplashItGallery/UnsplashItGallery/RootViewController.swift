@@ -31,10 +31,6 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        navigationController?.navigationBar.translucent = false
-//        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-//        navigationController?.navigationBar.shadowImage = UIImage()
-//        navigationController?.navigationBar.barTintColor = UIColor(red: 57/255.0, green: 67/255.0, blue: 89/255.0, alpha: 1.0)
         
         //Add pullToRefresh
         let loadingView = DGElasticPullToRefreshLoadingViewCircle()
@@ -49,6 +45,11 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         //获得所有json数据
         getLatestData()
+        
+        //检测网络
+        checkNetConnection()
+        
+        
     }
     
     
@@ -57,6 +58,20 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         // Dispose of any resources that can be recreated.
     }
 
+    func checkNetConnection(){
+        
+       let reachability = try? Reachability.reachabilityForInternetConnection()
+        //判断连接状态
+        if reachability!.isReachable(){
+            print("网络可用")
+        }else{
+            print("网络不可用")
+            ShowAlert.showAlert(NSLocalizedString("noNetwork", comment: ""), controller: self)
+        }
+        
+    }
+    
+    
     //MARK: - Fetch Data
     func getLatestData(){
         //Http Request

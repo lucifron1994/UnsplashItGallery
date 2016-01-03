@@ -25,21 +25,23 @@ class DetailViewController: UIViewController,UIScrollViewDelegate {
         
         self.scrollView.addSubview(imageView)
         self.scrollView.contentSize =  CGSizeMake(kWidth, kHeight)
-        
         let num = imageModel.imageId
-//        let width = imageModel.width
-//        let height = imageModel.height
-        
+        //Download image with the frame equal to the device*2
         let url = NSURL(string:"https://unsplash.it/\(kHeight*2)/\(kWidth*2)?image=\(num!)")
+        
         
         self.imageView.kf_setImageWithURL(url!, placeholderImage: nil, optionsInfo: nil, progressBlock: { (receivedSize, totalSize) -> () in
                 self.progressView.progress = (Float(receivedSize)) / (Float(totalSize))
                 print("Download Progress: \(receivedSize)/\(totalSize)")
-
+            
             }) { (image, error, cacheType, imageURL) -> () in
+                if (error != nil){
+                   ShowAlert.showAlert("Error", controller: self)
+                }
+                
                 self.progressView.hidden = true
                 self.tempView.hidden = true
-               print("Downloaded and set!")
+                print("Downloaded and set!")
         }
     }
 
@@ -47,48 +49,32 @@ class DetailViewController: UIViewController,UIScrollViewDelegate {
         super.didReceiveMemoryWarning()
     }
     
-    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
-        return self.imageView
-    }
-    
-//    func scrollViewDidZoom(scrollView: UIScrollView) {
-//        let imageViewSize = imageView.frame.size
-//        let scrollViewSize = scrollView.bounds.size
-//        
-//        let verticalPadding = imageViewSize.height < scrollViewSize.height ? (scrollViewSize.height - imageViewSize.height) / 2 : 0
-//        let horizontalPadding = imageViewSize.width < scrollViewSize.width ? (scrollViewSize.width - imageViewSize.width) / 2 : 0
-//        
-//        scrollView.contentInset = UIEdgeInsets(top: verticalPadding, left: horizontalPadding, bottom: verticalPadding, right: horizontalPadding)
-//    }
-//    
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-//        if toolBar.hidden{
-//            toolBar.hidden = false
-//            view.backgroundColor = UIColor.blackColor()
-//        }else{
-//            toolBar.hidden = true
-//            view.backgroundColor = UIColor.whiteColor()
-//        }
+  
+    //MARK: - Action
+    @IBAction func tappedInScrollView(sender: AnyObject) {
+        if toolBar.hidden{
+            toolBar.hidden = false
+        }else{
+            toolBar.hidden = true
+        }
     }
     
     @IBAction func shareAction(sender: AnyObject) {
         // On iPad, you must present the view controller in a popover.
+//        let saveHDImageActivity = SaveHDImageActivity()
+//        saveHDImageActivity.imageModel = self.imageModel
         
-       // let saveHDImageActivity = SaveHDImageActivity()
-
-       //BUg 图片未加载就存
-        let shareImage : UIImage = self.imageView.image!
-        
-        let activity = UIActivityViewController(activityItems: [shareImage], applicationActivities: nil)
-        
-        self.presentViewController(activity, animated: true, completion: nil)
+        if let shareImage :UIImage = self.imageView.image {
+            let activity = UIActivityViewController(activityItems: [shareImage], applicationActivities: nil)
+            self.presentViewController(activity, animated: true, completion: nil)
+        }
     }
     
     
     @IBAction func dismissVC(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
     
     @IBAction func saveOriginalImage(){
         let tempImageView = UIImageView()
@@ -99,27 +85,52 @@ class DetailViewController: UIViewController,UIScrollViewDelegate {
         let num = imageModel.imageId
         let width = imageModel.width
         let height = imageModel.height
-        let url = NSURL(string:"https://unsplash.it/\(height)/\(width))?image=\(num!)")
+        let url = NSURL(string:"https://unsplash.it/\(width!)/\(height!)?image=\(num!)")
+        
+        print(url)
         
         tempImageView.kf_setImageWithURL(url!, placeholderImage: nil, optionsInfo: nil, progressBlock: { (receivedSize, totalSize) -> () in
+            
             self.progressView.progress = (Float(receivedSize)) / (Float(totalSize))
             print("Download Progress: \(receivedSize)/\(totalSize)")
             
             }) { (image, error, cacheType, imageURL) -> () in
+                if error != nil {
+                    ShowAlert.showAlert("Error", controller: self)
+                }else{
+                    if image != nil {
+                        UIImageWriteToSavedPhotosAlbum(image!, self, "image:didFinishSavingWithError:contextInfo:", nil)
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.imageView.image = image
+                        })
+                    }
+                    
+                }
                 self.progressView.hidden = true
                 self.tempView.hidden = true
                 print("Downloaded and set!")
         }
-
-        UIImageWriteToSavedPhotosAlbum(tempImageView.image!, self, "image:didFinishSavingWithError:contextInfo:", nil)
+      
     }
     
     func image(image: UIImage, didFinishSavingWithError: NSError?, contextInfo: AnyObject) {
         if didFinishSavingWithError != nil {
-            print("错误")
-            return
+            ShowAlert.showAlert("Error", controller: self)
         }
-        print("OK")
+    }
+    
+    
+    //MARK: - ScrollView Delegate
+    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+        return self.imageView
+    }
+    
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if decelerate{
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                scrollView.setContentOffset(scrollView.contentOffset, animated: false)
+            })
+        }
     }
     
     
