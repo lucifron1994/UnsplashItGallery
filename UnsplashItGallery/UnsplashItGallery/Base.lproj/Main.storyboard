@@ -73,7 +73,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1106" y="349"/>
+            <point key="canvasLocation" x="1099" y="363"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="dRo-69-Kgn">
@@ -87,13 +87,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Num-QM-uvT">
-                                <rect key="frame" x="0.0" y="68" width="600" height="463"/>
-                            </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="7q0-aO-cbx">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
-                                    <barButtonItem systemItem="action" id="6AP-He-cPV"/>
+                                    <barButtonItem systemItem="action" id="6AP-He-cPV">
+                                        <connections>
+                                            <action selector="shareAction:" destination="CT3-E1-bjg" id="7QM-4M-hmU"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="gfy-Xw-ptE"/>
+                                    <barButtonItem systemItem="save" id="rSS-hW-ZdJ">
+                                        <connections>
+                                            <action selector="saveOriginalImage" destination="CT3-E1-bjg" id="dkK-Sj-ozb"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="z2o-aK-5yX"/>
                                     <barButtonItem systemItem="stop" id="7CC-gR-JHC">
                                         <connections>
@@ -103,37 +110,72 @@
                                 </items>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </toolbar>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" maximumZoomScale="1.8" translatesAutoresizingMaskIntoConstraints="NO" id="1UK-rj-vYg">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="560"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dT5-pZ-76m">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="560"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="dT5-pZ-76m" firstAttribute="centerY" secondItem="1UK-rj-vYg" secondAttribute="centerY" id="Ndf-G3-wma"/>
+                                    <constraint firstAttribute="bottom" secondItem="dT5-pZ-76m" secondAttribute="bottom" id="Txw-sg-rbm"/>
+                                    <constraint firstItem="dT5-pZ-76m" firstAttribute="top" secondItem="1UK-rj-vYg" secondAttribute="top" id="axc-Ba-ys5"/>
+                                    <constraint firstAttribute="trailing" secondItem="dT5-pZ-76m" secondAttribute="trailing" id="gO5-B3-Ugx"/>
+                                    <constraint firstItem="dT5-pZ-76m" firstAttribute="leading" secondItem="1UK-rj-vYg" secondAttribute="leading" id="gRd-Iz-X6c"/>
+                                    <constraint firstItem="dT5-pZ-76m" firstAttribute="centerX" secondItem="1UK-rj-vYg" secondAttribute="centerX" id="zba-U8-8Os"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="CT3-E1-bjg" id="NH4-XM-Fh3"/>
+                                </connections>
+                            </scrollView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aDF-oC-xqx">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <subviews>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bEM-Dq-nT9">
+                                        <rect key="frame" x="60" y="299" width="480" height="2"/>
+                                    </progressView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="0.034671336206896552" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="bEM-Dq-nT9" firstAttribute="leading" secondItem="aDF-oC-xqx" secondAttribute="leading" constant="60" id="COU-zS-MJ7"/>
+                                    <constraint firstAttribute="trailing" secondItem="bEM-Dq-nT9" secondAttribute="trailing" constant="60" id="DHT-EA-v5u"/>
+                                    <constraint firstItem="bEM-Dq-nT9" firstAttribute="centerY" secondItem="aDF-oC-xqx" secondAttribute="centerY" id="bvT-81-TxS"/>
+                                    <constraint firstItem="bEM-Dq-nT9" firstAttribute="centerX" secondItem="aDF-oC-xqx" secondAttribute="centerX" id="gMv-0T-gww"/>
+                                </constraints>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="Num-QM-uvT" secondAttribute="trailing" constant="-20" id="11p-tr-ehw"/>
-                            <constraint firstItem="tyM-yq-Mky" firstAttribute="top" secondItem="Num-QM-uvT" secondAttribute="bottom" constant="69" id="1RU-it-pZ9"/>
-                            <constraint firstItem="Num-QM-uvT" firstAttribute="top" secondItem="4D0-Gi-GuS" secondAttribute="bottom" constant="48" id="CkA-TO-1du"/>
                             <constraint firstItem="tyM-yq-Mky" firstAttribute="top" secondItem="7q0-aO-cbx" secondAttribute="bottom" id="Lza-hc-mCO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="aDF-oC-xqx" secondAttribute="trailing" constant="-20" id="WqL-zO-ZxT"/>
+                            <constraint firstItem="tyM-yq-Mky" firstAttribute="top" secondItem="aDF-oC-xqx" secondAttribute="bottom" id="aoQ-TN-W7f"/>
                             <constraint firstAttribute="trailingMargin" secondItem="7q0-aO-cbx" secondAttribute="trailing" constant="-20" id="b5M-M3-5gn"/>
-                            <constraint firstItem="Num-QM-uvT" firstAttribute="leading" secondItem="Du0-Ql-Qhk" secondAttribute="leadingMargin" constant="-20" id="foK-M1-HNA"/>
-                            <constraint firstItem="Num-QM-uvT" firstAttribute="centerY" secondItem="Du0-Ql-Qhk" secondAttribute="centerY" id="gDN-rD-KIi"/>
+                            <constraint firstItem="1UK-rj-vYg" firstAttribute="trailing" secondItem="7q0-aO-cbx" secondAttribute="trailing" id="c5c-y5-auO"/>
+                            <constraint firstItem="1UK-rj-vYg" firstAttribute="bottom" secondItem="tyM-yq-Mky" secondAttribute="top" constant="-40" id="i3B-8i-uiK"/>
                             <constraint firstItem="7q0-aO-cbx" firstAttribute="leading" secondItem="Du0-Ql-Qhk" secondAttribute="leadingMargin" constant="-20" id="jIf-eP-dCb"/>
-                            <constraint firstItem="Num-QM-uvT" firstAttribute="centerX" secondItem="Du0-Ql-Qhk" secondAttribute="centerX" id="vv5-LV-hqj"/>
+                            <constraint firstItem="1UK-rj-vYg" firstAttribute="leading" secondItem="7q0-aO-cbx" secondAttribute="leading" id="p8P-fS-VJH"/>
+                            <constraint firstItem="aDF-oC-xqx" firstAttribute="top" secondItem="Du0-Ql-Qhk" secondAttribute="topMargin" id="pBp-Eh-KNK"/>
+                            <constraint firstItem="1UK-rj-vYg" firstAttribute="top" secondItem="Du0-Ql-Qhk" secondAttribute="top" id="u9s-3g-ob1"/>
+                            <constraint firstItem="aDF-oC-xqx" firstAttribute="leading" secondItem="Du0-Ql-Qhk" secondAttribute="leadingMargin" constant="-20" id="zLk-nK-KpW"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="gDN-rD-KIi"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
-                        <outlet property="imageView" destination="Num-QM-uvT" id="syS-Xf-YvB"/>
+                        <outlet property="imageView" destination="dT5-pZ-76m" id="cQY-jr-RM8"/>
+                        <outlet property="progressView" destination="bEM-Dq-nT9" id="Zbp-Ly-SxA"/>
+                        <outlet property="scrollView" destination="1UK-rj-vYg" id="5j5-Bu-2oY"/>
+                        <outlet property="tempView" destination="aDF-oC-xqx" id="97I-Rl-6QC"/>
+                        <outlet property="toolBar" destination="7q0-aO-cbx" id="NUZ-Yu-Ke5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JOp-kb-Olv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1837" y="349"/>
+            <point key="canvasLocation" x="1787" y="363"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Root Navigation Controller-->
         <scene sceneID="RzC-5g-2LX">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="5eK-6i-Ane" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="5eK-6i-Ane" customClass="RootNavigationController" customModule="UnsplashItGallery" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="LMv-Xd-2mU">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -146,7 +188,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="92f-BC-bAd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="404" y="349"/>
+            <point key="canvasLocation" x="392" y="363"/>
         </scene>
     </scenes>
 </document>

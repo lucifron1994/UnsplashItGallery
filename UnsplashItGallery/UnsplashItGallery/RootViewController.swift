@@ -31,6 +31,10 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        navigationController?.navigationBar.translucent = false
+//        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+//        navigationController?.navigationBar.shadowImage = UIImage()
+//        navigationController?.navigationBar.barTintColor = UIColor(red: 57/255.0, green: 67/255.0, blue: 89/255.0, alpha: 1.0)
         
         //Add pullToRefresh
         let loadingView = DGElasticPullToRefreshLoadingViewCircle()
@@ -68,6 +72,8 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     for (var i = (self.jsonArray?.count)!-1; i > ((self.jsonArray?.count)!-1-self.pageImagesCount); i=i-1){
                         let model = ImageModel()
                         model.imageId = self.jsonArray![i]["id"] as? Int
+                        model.width = self.jsonArray![i]["width"] as? Int
+                        model.height = self.jsonArray![i]["height"] as? Int
                         self.imagesList?.append(model)
                     }
                     
@@ -83,6 +89,8 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         for (var i = (self.jsonArray?.count)!-1 - numberOfPage*pageImagesCount; i > ((self.jsonArray?.count)!-self.pageImagesCount-1 - numberOfPage*pageImagesCount); i=i-1){
             let model = ImageModel()
             model.imageId = self.jsonArray![i]["id"] as? Int
+            model.width = self.jsonArray![i]["width"] as? Int
+            model.height = self.jsonArray![i]["height"] as? Int
             self.imagesList?.append(model)
         }
         self.numberOfPage++
@@ -145,5 +153,6 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
     }
 
+ 
     
 }
