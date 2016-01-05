@@ -87,7 +87,6 @@ class DetailViewController: UIViewController,UIScrollViewDelegate {
         let height = imageModel.height
         let url = NSURL(string:"https://unsplash.it/\(width!)/\(height!)?image=\(num!)")
         
-        print(url)
         
         tempImageView.kf_setImageWithURL(url!, placeholderImage: nil, optionsInfo: nil, progressBlock: { (receivedSize, totalSize) -> () in
             
@@ -95,6 +94,7 @@ class DetailViewController: UIViewController,UIScrollViewDelegate {
             print("Download Progress: \(receivedSize)/\(totalSize)")
             
             }) { (image, error, cacheType, imageURL) -> () in
+                
                 if error != nil {
                     ShowAlert.showAlert("Error", controller: self)
                 }else{

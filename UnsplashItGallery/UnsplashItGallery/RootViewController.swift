@@ -32,24 +32,38 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("Path \(cachePath)")
+
+//        let titleImageView = UIImageView(image: UIImage(named: "titleView"))
+//        titleImageView.frame = CGRectMake(0, 0, 70, 70/16.0*9)
+//        titleImageView.contentMode = .ScaleAspectFit
+//        titleImageView.clipsToBounds = true
+//        self.navigationItem.titleView  = titleImageView
+        tableView.separatorStyle = .None
+        
         //Add pullToRefresh
         let loadingView = DGElasticPullToRefreshLoadingViewCircle()
-        loadingView.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
+        loadingView.tintColor = UIColor.whiteColor()
+        
         tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             self!.getLatestData()
             self?.tableView.dg_stopLoading()
             }, loadingView: loadingView)
-        tableView.dg_setPullToRefreshFillColor(UIColor(red: 57/255.0, green: 67/255.0, blue: 89/255.0, alpha: 1.0))
-        tableView.dg_setPullToRefreshBackgroundColor(tableView.backgroundColor!)
+        
+        tableView.dg_setPullToRefreshBackgroundColor(UIColor.whiteColor())
+        tableView.dg_setPullToRefreshFillColor(UIColor.blackColor())
         
         
-        //获得所有json数据
+        //检查JSON有的话先用旧的并刷新
+        if  DataStorageTool.fileExist() {
+            self.jsonArray = DataStorageTool.getJsonData()
+            updateJSONData()
+        }
+        //获得最新json数据
         getLatestData()
         
         //检测网络
         checkNetConnection()
-        
-        
     }
     
     
@@ -74,39 +88,57 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     //MARK: - Fetch Data
     func getLatestData(){
-        //Http Request
         Alamofire.request(.GET, BaseUrl, parameters: nil)
             .responseJSON { response in
-                self.jsonArray = [AnyObject]()
-                if let JSON : [AnyObject] = response.result.value as? [AnyObject]{
-                    self.jsonArray = JSON
-                }
                 
-                if self.jsonArray?.count != 0{
-                    self.imagesList = [ImageModel]()
-                    for (var i = (self.jsonArray?.count)!-1; i > ((self.jsonArray?.count)!-1-self.pageImagesCount); i=i-1){
-                        let model = ImageModel()
-                        model.imageId = self.jsonArray![i]["id"] as? Int
-                        model.width = self.jsonArray![i]["width"] as? Int
-                        model.height = self.jsonArray![i]["height"] as? Int
-                        self.imagesList?.append(model)
+                if let JSON : [AnyObject] = response.result.value as? [AnyObject]{
+                    print("JSONDATA")
+                    
+                    if (DataStorageTool.checkFileIsSame(JSON)){
+                        return
+                    }else{
+                        self.jsonArray = [AnyObject]()
+                        self.jsonArray = JSON
+                        DataStorageTool.saveJsonData(JSON)
+                        self.updateJSONData()
                     }
                     
-                    self.numberOfPage = 1
-                    self.tableView.reloadData()
+                }else{
+                    ShowAlert.showAlert(NSLocalizedString("failedToGetLatestData", comment: ""), controller: self)
                 }
+                
         }
 
     }
     
+    //结合JSON数据刷新UI
+    func updateJSONData(){
+        if self.jsonArray?.count != 0{
+            self.imagesList = [ImageModel]()
+            for (var i = (self.jsonArray?.count)!-1; i > ((self.jsonArray?.count)!-1-self.pageImagesCount); i=i-1){
+                let model = ImageModel()
+                model.imageId = self.jsonArray![i]["id"] as? Int
+                model.width = self.jsonArray![i]["width"] as? Int
+                model.height = self.jsonArray![i]["height"] as? Int
+                self.imagesList?.append(model)
+            }
+            
+            self.numberOfPage = 1
+            self.tableView.reloadData()
+        }
+    }
+    
+    //获取10条旧数据
     func loadTenOldData(){
         
         for (var i = (self.jsonArray?.count)!-1 - numberOfPage*pageImagesCount; i > ((self.jsonArray?.count)!-self.pageImagesCount-1 - numberOfPage*pageImagesCount); i=i-1){
-            let model = ImageModel()
-            model.imageId = self.jsonArray![i]["id"] as? Int
-            model.width = self.jsonArray![i]["width"] as? Int
-            model.height = self.jsonArray![i]["height"] as? Int
-            self.imagesList?.append(model)
+            if (i>0){
+                let model = ImageModel()
+                model.imageId = self.jsonArray![i]["id"] as? Int
+                model.width = self.jsonArray![i]["width"] as? Int
+                model.height = self.jsonArray![i]["height"] as? Int
+                self.imagesList?.append(model)
+            }
         }
         self.numberOfPage++
         self.tableView.reloadData()
@@ -121,6 +153,26 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             if numberOfPage != 0{
                 loadTenOldData()
             }
+        }
+    }
+    
+    //MARK: - Action
+    
+    @IBAction func getRandomImage(sender: AnyObject) {
+        if self.jsonArray != nil {
+            let random: UInt32 = UInt32((self.jsonArray?.count)!)
+            let randomIndex = Int(arc4random_uniform(random))
+            
+            let model = ImageModel()
+            model.imageId = self.jsonArray![randomIndex]["id"] as? Int
+            model.width = self.jsonArray![randomIndex]["width"] as? Int
+            model.height = self.jsonArray![randomIndex]["height"] as? Int
+            
+            let sb = UIStoryboard(name: "Main", bundle: nil)
+            let detailVC = sb.instantiateViewControllerWithIdentifier("detailVC") as! DetailViewController
+            detailVC.imageModel = model
+            detailVC.modalTransitionStyle = .CrossDissolve
+            presentViewController(detailVC, animated: true, completion: nil)
         }
     }
     
@@ -167,7 +219,5 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             detail.imageModel = self.imagesList?[indexPath.row]
         }
     }
-
- 
     
 }
