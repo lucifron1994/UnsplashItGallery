@@ -26,22 +26,23 @@ class DetailViewController: UIViewController,UIScrollViewDelegate {
         self.scrollView.addSubview(imageView)
         self.scrollView.contentSize =  CGSizeMake(kWidth, kHeight)
         let num = imageModel.imageId
+        
         //Download image with the frame equal to the device*2
         let url = NSURL(string:"https://unsplash.it/\(kHeight*2)/\(kWidth*2)?image=\(num!)")
         
         
         self.imageView.kf_setImageWithURL(url!, placeholderImage: nil, optionsInfo: nil, progressBlock: { (receivedSize, totalSize) -> () in
                 self.progressView.progress = (Float(receivedSize)) / (Float(totalSize))
-                print("Download Progress: \(receivedSize)/\(totalSize)")
+//                print("Download Progress: \(receivedSize)/\(totalSize)")
             
             }) { (image, error, cacheType, imageURL) -> () in
                 if (error != nil){
-                   ShowAlert.showAlert("Error", controller: self)
+                   ShowAlert.showAlert(NSLocalizedString("error", comment: ""), controller: self)
                 }
                 
                 self.progressView.hidden = true
                 self.tempView.hidden = true
-                print("Downloaded and set!")
+//                print("Downloaded and set!")
         }
     }
 
@@ -91,12 +92,12 @@ class DetailViewController: UIViewController,UIScrollViewDelegate {
         tempImageView.kf_setImageWithURL(url!, placeholderImage: nil, optionsInfo: nil, progressBlock: { (receivedSize, totalSize) -> () in
             
             self.progressView.progress = (Float(receivedSize)) / (Float(totalSize))
-            print("Download Progress: \(receivedSize)/\(totalSize)")
+//            print("Download Progress: \(receivedSize)/\(totalSize)")
             
             }) { (image, error, cacheType, imageURL) -> () in
                 
                 if error != nil {
-                    ShowAlert.showAlert("Error", controller: self)
+                    ShowAlert.showAlert(NSLocalizedString("error", comment: ""), controller: self)
                 }else{
                     if image != nil {
                         UIImageWriteToSavedPhotosAlbum(image!, self, "image:didFinishSavingWithError:contextInfo:", nil)
@@ -108,14 +109,16 @@ class DetailViewController: UIViewController,UIScrollViewDelegate {
                 }
                 self.progressView.hidden = true
                 self.tempView.hidden = true
-                print("Downloaded and set!")
+//                print("Downloaded and set!")
         }
       
     }
     
     func image(image: UIImage, didFinishSavingWithError: NSError?, contextInfo: AnyObject) {
         if didFinishSavingWithError != nil {
-            ShowAlert.showAlert("Error", controller: self)
+            ShowAlert.showAlert(NSLocalizedString("error", comment: ""), controller: self)
+        }else{
+            ShowAlert.showAlert(NSLocalizedString("savedToPhoto", comment: ""), controller: self)
         }
     }
     

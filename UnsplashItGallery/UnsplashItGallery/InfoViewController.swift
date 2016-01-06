@@ -63,7 +63,7 @@ class InfoViewController: UIViewController {
         }
         
     }
-    
+
     
     func fileSizeAtPath(filePath: String) -> Int{
         let fm = NSFileManager.defaultManager()

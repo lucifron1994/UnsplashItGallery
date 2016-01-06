@@ -12,39 +12,32 @@ import Alamofire
 let kWidth = UIScreen.mainScreen().bounds.size.width
 let kHeight = UIScreen.mainScreen().bounds.size.height
 
-private let kPullUpOffset:CGFloat = 50.0
 
-let kCellID = "imageCell"
-let BaseUrl = "https://unsplash.it/list"
+private let kPullUpOffset:CGFloat = 50.0
+private let kCellID = "imageCell"
+private let BaseUrl = "https://unsplash.it/list"
 
 
 class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
     @IBOutlet weak var tableView: UITableView!
     
-    var jsonArray:[AnyObject]?
-    var imagesList:[ImageModel]?
+    private var jsonArray:[AnyObject]?
+    private var imagesList:[ImageModel]?
     
-    var numberOfPage = 0
-    var pageImagesCount = 10
+    private var numberOfPage = 0
+    private var pageImagesCount = 10
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("Path \(cachePath)")
-
-//        let titleImageView = UIImageView(image: UIImage(named: "titleView"))
-//        titleImageView.frame = CGRectMake(0, 0, 70, 70/16.0*9)
-//        titleImageView.contentMode = .ScaleAspectFit
-//        titleImageView.clipsToBounds = true
-//        self.navigationItem.titleView  = titleImageView
         tableView.separatorStyle = .None
         
         //Add pullToRefresh
         let loadingView = DGElasticPullToRefreshLoadingViewCircle()
         loadingView.tintColor = UIColor.whiteColor()
-        
+    
         tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             self!.getLatestData()
             self?.tableView.dg_stopLoading()
@@ -77,9 +70,9 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
        let reachability = try? Reachability.reachabilityForInternetConnection()
         //判断连接状态
         if reachability!.isReachable(){
-            print("网络可用")
+//            print("网络可用")
         }else{
-            print("网络不可用")
+//            print("网络不可用")
             ShowAlert.showAlert(NSLocalizedString("noNetwork", comment: ""), controller: self)
         }
         
@@ -92,7 +85,6 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             .responseJSON { response in
                 
                 if let JSON : [AnyObject] = response.result.value as? [AnyObject]{
-                    print("JSONDATA")
                     
                     if (DataStorageTool.checkFileIsSame(JSON)){
                         return
@@ -104,6 +96,7 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     }
                     
                 }else{
+                    
                     ShowAlert.showAlert(NSLocalizedString("failedToGetLatestData", comment: ""), controller: self)
                 }
                 
@@ -148,7 +141,7 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     //MARK: - Pull Up Refresh - add Old Data
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if scrollView.contentOffset.y + scrollView.frame.size.height - kPullUpOffset > scrollView.contentSize.height{
-                print("load more")
+//                print("load more")
             //加载更旧的数据10条
             if numberOfPage != 0{
                 loadTenOldData()
@@ -197,7 +190,7 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         let cell:MainTableViewCell? = tableView.dequeueReusableCellWithIdentifier(kCellID, forIndexPath: indexPath) as? MainTableViewCell
         
-        if imagesList?.count != 0{
+        if (indexPath.row < self.imagesList?.count){
             let model = self.imagesList![indexPath.row]
             cell?.setImageDataSource(model)
         }
