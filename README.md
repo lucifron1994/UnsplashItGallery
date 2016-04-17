@@ -7,5 +7,5 @@ App Store Link https://itunes.apple.com/us/app/unsplash-gallery/id1071715146?l=z
 Screen shots
 
 
-![](https://github.com/lucifron1994/UnsplashItGallery/blob/master/1.png =300*)
-![](https://github.com/lucifron1994/UnsplashItGallery/blob/master/2.png =300*)
+![](https://github.com/lucifron1994/UnsplashItGallery/blob/master/1.png)
+![](https://github.com/lucifron1994/UnsplashItGallery/blob/master/2.png)
