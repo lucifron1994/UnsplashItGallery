@@ -7,3 +7,11 @@
 */
 
 "noNetwork" = "无网络连接";
+
+"failedToGetLatestData" = "获得最新数据失败";
+
+"clearCache" = "清除缓存";
+
+"savedToPhoto" = "已保存到系统相册";
+
+"error" = "发生错误";

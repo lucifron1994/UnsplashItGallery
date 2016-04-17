@@ -7,3 +7,11 @@
 */
 
 "noNetwork" = "No Network Connection";
+
+"failedToGetLatestData" = "Get the latest data failed";
+
+"clearCache" = "Clear Caches";
+
+"savedToPhoto" = "It has been saved to the photo album";
+
+"error" = "Error";

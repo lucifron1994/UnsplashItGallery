@@ -12,12 +12,64 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
+    private var blueView: UIImageView!
+    private var redView: UIImageView!
+    private var purpleView: UIImageView!
+    private let animationDuration = 0.8
+    
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        self.window?.backgroundColor = UIColor.blackColor()
+        self.window?.makeKeyAndVisible()
+        
+        prepareForAnimation()
+        runAnimation()
+        
         return true
     }
+    
+    func prepareForAnimation(){
+        let originalFrame = CGRectMake(-kWidth/2, 0, kWidth*2, kHeight)
+        
+        redView = UIImageView(frame: originalFrame)
+        redView.contentMode = .ScaleAspectFill
+        redView.image = UIImage(named: "redPart")
+        self.window?.addSubview(redView)
+        
+        purpleView = UIImageView(frame: originalFrame)
+        purpleView.contentMode = .ScaleAspectFill
+        purpleView.image = UIImage(named: "purplePart")
+        self.window?.addSubview(purpleView)
+        
+        
+        blueView = UIImageView(frame: originalFrame)
+        blueView.contentMode = .ScaleAspectFill
+        blueView.image = UIImage(named: "bluePart")
+        self.window?.addSubview(blueView)
+        
+        
+    }
 
+    func runAnimation(){
+        UIView.animateWithDuration(animationDuration, animations: { () -> Void in
+            self.redView.frame = CGRectMake(0, 0, kWidth*2, kHeight)
+            self.redView.alpha = 0
+            self.purpleView.frame = CGRectMake(-kWidth, 0, kWidth*2, kHeight)
+            self.purpleView.alpha = 0
+            self.blueView.frame = CGRectMake(-kWidth/2, kHeight, kWidth*2, kHeight)
+            self.blueView.alpha = 0
+            
+            self.window?.backgroundColor = UIColor.whiteColor()
+            
+            }) { (bool) -> Void in
+            self.redView.removeFromSuperview()
+            self.purpleView.removeFromSuperview()
+            self.blueView.removeFromSuperview()
+        }
+    }
+    
     
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

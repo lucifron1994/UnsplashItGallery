@@ -1,6 +1,13 @@
 
-/* Class = "UINavigationItem"; title = "Unaplash"; ObjectID = "dYj-Sa-zkZ"; */
-"dYj-Sa-zkZ.title" = "Unaplash";
+/* Class = "UINavigationItem"; title = "最新作品"; ObjectID = "dYj-Sa-zkZ"; */
+"dYj-Sa-zkZ.title" = "高清摄影壁纸";
+
+/* Class = "UITextView"; text = "www.qq.com hello \\n  http://www.qq.com/   本应用会和xxx同步更新"; ObjectID = "kCy-Cl-Bju"; */
+"qtb-DS-rp1.text" = "所有高分辨率照片完全免费使用, 每10天更新10张新照片";
 
 /* Class = "UIBarButtonItem"; title = "Save HD Image"; ObjectID = "rSS-hW-ZdJ"; */
-"rSS-hW-ZdJ.title" = "保存高清图片";
+"rSS-hW-ZdJ.title" = "保存高清照片";
+
+/* Class = "UIButton"; normalTitle = "Clear Caches"; ObjectID = "vtf-7G-F34"; */
+//"vtf-7G-F34.normalTitle" = "清除缓存";
+

@@ -17,7 +17,7 @@ class MainTableViewCell: UITableViewCell {
         
         cellImageView.kf_showIndicatorWhenLoading = true
         let num = model.imageId
-        let url = NSURL(string:"https://unsplash.it/\(kWidth*2)/\(kWidth/8*9)?image=\(num!)")
+        let url = NSURL(string:"https://unsplash.it/\(kRootViewImageWidth)/\(kRootViewImageHeight)?image=\(num!)")
         self.cellImageView.kf_setImageWithURL(url!)
     }
     

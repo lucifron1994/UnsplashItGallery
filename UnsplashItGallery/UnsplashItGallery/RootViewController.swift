@@ -12,8 +12,12 @@ import Alamofire
 let kWidth = UIScreen.mainScreen().bounds.size.width
 let kHeight = UIScreen.mainScreen().bounds.size.height
 
+let kRootViewImageWidth = kWidth*2
+let kRootViewImageHeight = kWidth/16*9*2
 
-private let kPullUpOffset:CGFloat = 50.0
+
+private let kPullUpOffset:CGFloat = 20.0
+private let kToPhotoBrowserSegue = "photoBrowserSegue"
 private let kCellID = "imageCell"
 private let BaseUrl = "https://unsplash.it/list"
 
@@ -37,15 +41,12 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         //Add pullToRefresh
         let loadingView = DGElasticPullToRefreshLoadingViewCircle()
         loadingView.tintColor = UIColor.whiteColor()
-    
         tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             self!.getLatestData()
             self?.tableView.dg_stopLoading()
             }, loadingView: loadingView)
-        
         tableView.dg_setPullToRefreshBackgroundColor(UIColor.whiteColor())
         tableView.dg_setPullToRefreshFillColor(UIColor.blackColor())
-        
         
         //检查JSON有的话先用旧的并刷新
         if  DataStorageTool.fileExist() {
@@ -59,11 +60,6 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         checkNetConnection()
     }
     
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
     func checkNetConnection(){
         
@@ -108,6 +104,19 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func updateJSONData(){
         if self.jsonArray?.count != 0{
             self.imagesList = [ImageModel]()
+            
+//            let frontIndex = (self.jsonArray?.count)! - 1
+//            let backIndex = ((self.jsonArray?.count)!-1-self.pageImagesCount)
+//            
+//            for i in (backIndex...frontIndex).reverse() {
+//                print(i)
+//                    let model = ImageModel()
+//                    model.imageId = self.jsonArray![i]["id"] as? Int
+//                    model.width = self.jsonArray![i]["width"] as? Int
+//                    model.height = self.jsonArray![i]["height"] as? Int
+//                    self.imagesList?.append(model)
+//            }
+            
             for (var i = (self.jsonArray?.count)!-1; i > ((self.jsonArray?.count)!-1-self.pageImagesCount); i=i-1){
                 let model = ImageModel()
                 model.imageId = self.jsonArray![i]["id"] as? Int
@@ -115,7 +124,7 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 model.height = self.jsonArray![i]["height"] as? Int
                 self.imagesList?.append(model)
             }
-            
+
             self.numberOfPage = 1
             self.tableView.reloadData()
         }
@@ -123,7 +132,7 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     //获取10条旧数据
     func loadTenOldData(){
-        
+       
         for (var i = (self.jsonArray?.count)!-1 - numberOfPage*pageImagesCount; i > ((self.jsonArray?.count)!-self.pageImagesCount-1 - numberOfPage*pageImagesCount); i=i-1){
             if (i>0){
                 let model = ImageModel()
@@ -133,7 +142,7 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 self.imagesList?.append(model)
             }
         }
-        self.numberOfPage++
+        self.numberOfPage += 1
         self.tableView.reloadData()
     }
     
@@ -155,17 +164,16 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         if self.jsonArray != nil {
             let random: UInt32 = UInt32((self.jsonArray?.count)!)
             let randomIndex = Int(arc4random_uniform(random))
+            let indexPath = NSIndexPath(forItem: randomIndex, inSection: 0)
             
-            let model = ImageModel()
-            model.imageId = self.jsonArray![randomIndex]["id"] as? Int
-            model.width = self.jsonArray![randomIndex]["width"] as? Int
-            model.height = self.jsonArray![randomIndex]["height"] as? Int
             
             let sb = UIStoryboard(name: "Main", bundle: nil)
-            let detailVC = sb.instantiateViewControllerWithIdentifier("detailVC") as! DetailViewController
-            detailVC.imageModel = model
+            let detailVC = sb.instantiateViewControllerWithIdentifier("photoBrowser") as! PhotoBrowserController
+            detailVC.currentIndexPath = indexPath
+            detailVC.jsonArray  = self.jsonArray?.reverse()
             detailVC.modalTransitionStyle = .CrossDissolve
             presentViewController(detailVC, animated: true, completion: nil)
+
         }
     }
     
@@ -200,16 +208,15 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.performSegueWithIdentifier("detailSegue", sender: indexPath)
+        self.performSegueWithIdentifier(kToPhotoBrowserSegue, sender: indexPath)
     }
-    
     
     //MARK: - Switch Controller
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "detailSegue"{
-            let detail = segue.destinationViewController as! DetailViewController
-            let indexPath = sender as! NSIndexPath
-            detail.imageModel = self.imagesList?[indexPath.row]
+        if segue.identifier == kToPhotoBrowserSegue {
+            let detail = segue.destinationViewController as! PhotoBrowserController
+            detail.currentIndexPath = sender as? NSIndexPath
+            detail.jsonArray  = self.jsonArray?.reverse()
         }
     }
     
