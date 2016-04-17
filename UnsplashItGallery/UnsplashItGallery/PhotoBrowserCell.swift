@@ -45,7 +45,7 @@ class PhotoBrowserCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
     }
     
 }

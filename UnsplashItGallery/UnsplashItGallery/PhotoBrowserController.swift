@@ -29,7 +29,6 @@ class PhotoBrowserController: UIViewController, UICollectionViewDataSource{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //        print("current \(currentIndexPath?.item)")
         mainCollectionView.registerNib(UINib.init(nibName: "PhotoBrowserCell", bundle: nil), forCellWithReuseIdentifier: ImageCellID)
         
         //滚动CollectionView到目标位置
@@ -159,10 +158,9 @@ extension PhotoBrowserController{
         let url = NSURL(string:"https://unsplash.it/\(kHeight*2)/\(kWidth*2)?image=\(idString)")
         cell.tempImageURL = NSURL(string:"https://unsplash.it/\(kRootViewImageWidth)/\(kRootViewImageHeight)?image=\(idString)")
         cell.imageURL = url!
-        
-        print(url)
-        print(cell.tempImageURL)
-//        print("After \(cell.progressView.progress)")
+//        print(cell.tempImageURL)
+
+        print("self \(view.frame.size.width) coll \(collectionView.frame.size.width) image:\(cell.imageView_full.frame.width)");
         
         return cell
     }

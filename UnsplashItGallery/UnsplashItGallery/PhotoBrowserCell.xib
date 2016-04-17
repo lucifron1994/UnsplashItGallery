@@ -15,13 +15,13 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="567"/>
                 <subviews>
                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" maximumZoomScale="3" translatesAutoresizingMaskIntoConstraints="NO" id="NOG-MY-25w">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="567"/>
+                        <rect key="frame" x="0.0" y="0.0" width="355" height="567"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qvw-Z3-qri">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="567"/>
+                                <rect key="frame" x="0.0" y="0.0" width="355" height="567"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lc8-Ks-qjK">
-                                        <rect key="frame" x="0.0" y="178" width="375" height="211"/>
+                                        <rect key="frame" x="0.0" y="184" width="355" height="199"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="lc8-Ks-qjK" secondAttribute="height" multiplier="16:9" id="i2I-eJ-7OX"/>
                                         </constraints>
@@ -93,7 +93,7 @@
                 <constraint firstItem="NOG-MY-25w" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="FGN-sV-WkX"/>
                 <constraint firstItem="1lq-uj-oZF" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="Hf7-KX-clx"/>
                 <constraint firstAttribute="bottom" secondItem="NOG-MY-25w" secondAttribute="bottom" id="UnP-OO-Uua"/>
-                <constraint firstAttribute="trailing" secondItem="NOG-MY-25w" secondAttribute="trailing" id="lLF-Bz-Mqk"/>
+                <constraint firstAttribute="trailing" secondItem="NOG-MY-25w" secondAttribute="trailing" constant="20" id="lLF-Bz-Mqk"/>
             </constraints>
             <connections>
                 <outlet property="bgView" destination="qvw-Z3-qri" id="rIN-zX-3dv"/>

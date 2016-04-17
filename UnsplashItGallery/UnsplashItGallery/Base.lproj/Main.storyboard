@@ -275,7 +275,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="X74-ld-51I">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="620" height="600"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                                 <collectionViewLayout key="collectionViewLayout" id="AV1-Ip-YXj" customClass="ImageCollectionViewLayout" customModule="UnsplashItGallery" customModuleProvider="target"/>
@@ -337,7 +337,7 @@
                             <constraint firstItem="yeg-to-x6p" firstAttribute="leading" secondItem="8Xf-bb-3qR" secondAttribute="leadingMargin" constant="-20" id="hQd-hC-DXD"/>
                             <constraint firstItem="czi-TB-I0j" firstAttribute="top" secondItem="X74-ld-51I" secondAttribute="bottom" id="jOd-9f-0VJ"/>
                             <constraint firstAttribute="trailing" secondItem="edn-HL-cvb" secondAttribute="trailing" id="jra-VE-EBc"/>
-                            <constraint firstAttribute="trailing" secondItem="X74-ld-51I" secondAttribute="trailing" id="kMl-Le-W0Z"/>
+                            <constraint firstAttribute="trailing" secondItem="X74-ld-51I" secondAttribute="trailing" constant="-20" id="kMl-Le-W0Z"/>
                             <constraint firstItem="X74-ld-51I" firstAttribute="leading" secondItem="8Xf-bb-3qR" secondAttribute="leading" id="n5u-FS-uev"/>
                             <constraint firstItem="czi-TB-I0j" firstAttribute="top" secondItem="yeg-to-x6p" secondAttribute="bottom" id="r7h-d0-pxZ"/>
                             <constraint firstItem="yeg-to-x6p" firstAttribute="top" secondItem="8Xf-bb-3qR" secondAttribute="topMargin" id="yQv-v3-975"/>
