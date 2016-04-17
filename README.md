@@ -5,5 +5,5 @@ Unsplash pictures used UnsplashIt API
 App Store Link https://itunes.apple.com/us/app/unsplash-gallery/id1071715146?l=zh&ls=1&mt=8
 
 Screen shots
-![](https://github.com/lucifron1994/UnsplashItGallery/1.png)
-![](https://github.com/lucifron1994/UnsplashItGallery/2.png)
+![](https://github.com/lucifron1994/UnsplashItGallery/blob/master/1.png)
+![](https://github.com/lucifron1994/UnsplashItGallery/blob/master/2.png)
