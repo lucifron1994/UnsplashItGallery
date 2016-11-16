@@ -92,9 +92,7 @@ class PhotoBrowserController: UIViewController, UICollectionViewDataSource{
                 ShowAlert.showAlert(NSLocalizedString("error", comment: ""), controller: self)
             }else{
                 if image != nil {
-                    UIImageWriteToSavedPhotosAlbum(image!, self, "image:didFinishSavingWithError:contextInfo:", nil)
-                    //                        UIImageWriteToSavedPhotosAlbum(image!, self, #selector(PhotoBrowserController.image(_:didFinishSavingWithError:contextInfo:)), nil)
-                    
+                    UIImageWriteToSavedPhotosAlbum(image!, self, #selector(PhotoBrowserController.image(_:didFinishSavingWithError:contextInfo:)), nil)                    
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         let cell = self.mainCollectionView.cellForItemAtIndexPath(self.getCurrentIndex()) as? PhotoBrowserCell
                         cell!.imageView_full.image = image

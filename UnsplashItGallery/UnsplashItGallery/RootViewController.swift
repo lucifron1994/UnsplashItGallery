@@ -105,25 +105,26 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         if self.jsonArray?.count != 0{
             self.imagesList = [ImageModel]()
             
-//            let frontIndex = (self.jsonArray?.count)! - 1
-//            let backIndex = ((self.jsonArray?.count)!-1-self.pageImagesCount)
-//            
-//            for i in (backIndex...frontIndex).reverse() {
-//                print(i)
-//                    let model = ImageModel()
-//                    model.imageId = self.jsonArray![i]["id"] as? Int
-//                    model.width = self.jsonArray![i]["width"] as? Int
-//                    model.height = self.jsonArray![i]["height"] as? Int
-//                    self.imagesList?.append(model)
-//            }
+            let frontIndex = (self.jsonArray?.count)! - 1
+            let backIndex = ((self.jsonArray?.count)! - self.pageImagesCount)
             
-            for (var i = (self.jsonArray?.count)!-1; i > ((self.jsonArray?.count)!-1-self.pageImagesCount); i=i-1){
-                let model = ImageModel()
-                model.imageId = self.jsonArray![i]["id"] as? Int
-                model.width = self.jsonArray![i]["width"] as? Int
-                model.height = self.jsonArray![i]["height"] as? Int
-                self.imagesList?.append(model)
+            for i in (backIndex...frontIndex).reverse() {
+                print(i)
+                    let model = ImageModel()
+                    model.imageId = self.jsonArray![i]["id"] as? Int
+                    model.width = self.jsonArray![i]["width"] as? Int
+                    model.height = self.jsonArray![i]["height"] as? Int
+                    self.imagesList?.append(model)
             }
+            
+//            for (var i = (self.jsonArray?.count)!-1; i > ((self.jsonArray?.count)!-1-self.pageImagesCount); i=i-1){
+//                 print(i)
+//                let model = ImageModel()
+//                model.imageId = self.jsonArray![i]["id"] as? Int
+//                model.width = self.jsonArray![i]["width"] as? Int
+//                model.height = self.jsonArray![i]["height"] as? Int
+//                self.imagesList?.append(model)
+//            }
 
             self.numberOfPage = 1
             self.tableView.reloadData()
@@ -132,16 +133,27 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     //获取10条旧数据
     func loadTenOldData(){
-       
-        for (var i = (self.jsonArray?.count)!-1 - numberOfPage*pageImagesCount; i > ((self.jsonArray?.count)!-self.pageImagesCount-1 - numberOfPage*pageImagesCount); i=i-1){
-            if (i>0){
-                let model = ImageModel()
-                model.imageId = self.jsonArray![i]["id"] as? Int
-                model.width = self.jsonArray![i]["width"] as? Int
-                model.height = self.jsonArray![i]["height"] as? Int
-                self.imagesList?.append(model)
-            }
+        let frontIndex = (self.jsonArray?.count)!-1 - numberOfPage*pageImagesCount
+        let backIndex = ((self.jsonArray?.count)!-self.pageImagesCount - numberOfPage*pageImagesCount)
+        for i in (backIndex...frontIndex).reverse() {
+            print("old \(i)")
+            let model = ImageModel()
+            model.imageId = self.jsonArray![i]["id"] as? Int
+            model.width = self.jsonArray![i]["width"] as? Int
+            model.height = self.jsonArray![i]["height"] as? Int
+            self.imagesList?.append(model)
         }
+        
+//        for (var i = (self.jsonArray?.count)!-1 - numberOfPage*pageImagesCount; i > ((self.jsonArray?.count)!-self.pageImagesCount-1 - numberOfPage*pageImagesCount); i=i-1){
+//             print("old \(i)")
+//            if (i>0){
+//                let model = ImageModel()
+//                model.imageId = self.jsonArray![i]["id"] as? Int
+//                model.width = self.jsonArray![i]["width"] as? Int
+//                model.height = self.jsonArray![i]["height"] as? Int
+//                self.imagesList?.append(model)
+//            }
+//        }
         self.numberOfPage += 1
         self.tableView.reloadData()
     }
