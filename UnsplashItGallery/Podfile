@@ -6,6 +6,7 @@ use_frameworks!
 pod 'Kingfisher'
 pod 'DGElasticPullToRefresh'
 pod 'ReachabilitySwift', '~> 3'
+pod 'Alamofire'
 
 target 'UnsplashItGallery' do
 

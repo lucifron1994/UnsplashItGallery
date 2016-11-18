@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Alamofire.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>DGElasticPullToRefresh.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -37,12 +42,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1FCC3DDA73F80B32C30C43381CB9FB4C</key>
+		<key>5B4C3622FCE9564583D322F47618E986</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CAD30F3D5AF5FB211FEEF73E8A2BD4C8</key>
+		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>852CC5FB0C88A55614E720B92A0D4F55</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -15,7 +15,7 @@ class ShowAlert: NSObject {
         let alertView = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         controller.present(alertView, animated: false, completion: nil)
         
-        let time: TimeInterval = 2.0
+//        let time: TimeInterval = 2.0
         
 //        let delay = DispatchTime.now(dispatch_time_t(DispatchTime.now),
 //            Int64(time * Double(NSEC_PER_SEC)))

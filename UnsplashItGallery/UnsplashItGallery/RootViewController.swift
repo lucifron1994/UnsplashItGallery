@@ -7,9 +7,9 @@
 //
 
 import UIKit
-//import Alamofire
+import Alamofire
 import DGElasticPullToRefresh
-//import ReachabilitySwift
+import ReachabilitySwift
 
 let kWidth = UIScreen.main.bounds.size.width
 let kHeight = UIScreen.main.bounds.size.height
@@ -99,6 +99,7 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 //                }
 //                
 //        }
+//        
 
     }
     
@@ -220,9 +221,8 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         return cell!
     }
     
-    
-    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.performSegue(withIdentifier: kToPhotoBrowserSegue, sender: indexPath)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+          self.performSegue(withIdentifier: kToPhotoBrowserSegue, sender: indexPath)
     }
     
     //MARK: - Switch Controller

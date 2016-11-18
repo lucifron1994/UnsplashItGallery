@@ -66,14 +66,14 @@ class PhotoBrowserController: UIViewController, UICollectionViewDataSource{
         tempView.isHidden = false
         downloadProgressView.progress = 0.0
         
-        let imageDic =  jsonArray![getCurrentIndex().item]
+//        let imageDic =  jsonArray![getCurrentIndex().item]
         
-        let num = imageDic["id"] as!
-        Int
-        let width = imageDic["width"] as! Int
-        let height = imageDic["height"] as! Int
-        
-        let url = NSURL(string:"https://unsplash.it/\(width)/\(height)?image=\(num)")
+//        let num = imageDic["id"] as!
+//        Int
+//        let width = imageDic["width"] as! Int
+//        let height = imageDic["height"] as! Int
+//        
+//        let url = NSURL(string:"https://unsplash.it/\(width)/\(height)?image=\(num)")
         
 //        let downloader = ImageDownloader(name: "downloader")
 //        
