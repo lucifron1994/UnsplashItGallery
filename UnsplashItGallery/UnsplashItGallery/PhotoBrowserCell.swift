@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Kingfisher
+//import Kingfisher
 
 
 class PhotoBrowserCell: UICollectionViewCell {
@@ -24,22 +24,24 @@ class PhotoBrowserCell: UICollectionViewCell {
     var imageURL : NSURL? {
         didSet {
             
-            self.progressView.hidden = false
+            self.progressView.isHidden = false
             
-            imageView_full.kf_setImageWithURL(imageURL!, placeholderImage: nil, optionsInfo: nil, progressBlock: { (receivedSize, totalSize) in
-                
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.progressView.progress = CGFloat(receivedSize) / CGFloat(totalSize)
-                })
-            }) { (image, error, cacheType, imageURL) in
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.progressView.hidden = true
-                })
-                if (error != nil && image == nil) {
-                    self.imageView_full.kf_setImageWithURL(self.tempImageURL!)
-                }
-            }
-            
+//            imageView_full.
+//            
+//            imageView_full.kf_setImageWithURL(imageURL!, placeholderImage: nil, optionsInfo: nil, progressBlock: { (receivedSize, totalSize) in
+//                
+//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                    self.progressView.progress = CGFloat(receivedSize) / CGFloat(totalSize)
+//                })
+//            }) { (image, error, cacheType, imageURL) in
+//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                    self.progressView.hidden = true
+//                })
+//                if (error != nil && image == nil) {
+//                    self.imageView_full.kf_setImageWithURL(self.tempImageURL!)
+//                }
+//            }
+//            
         }
     }
     
@@ -51,11 +53,11 @@ class PhotoBrowserCell: UICollectionViewCell {
 }
 
 extension PhotoBrowserCell : UIScrollViewDelegate {
-    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView_full
     }
     
-    func scrollViewDidZoom(scrollView: UIScrollView) {
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
         self.centerScrollViewContents()
     }
     
@@ -78,7 +80,7 @@ extension PhotoBrowserCell : UIScrollViewDelegate {
         self.imageView_full.frame = contentsFrame
     }
     
-    func zoomInZoomOut(point: CGPoint!) {
+    func zoomInZoomOut(_ point: CGPoint!) {
         let newZoomScale = self.scrollView.zoomScale > (self.scrollView.maximumZoomScale/2) ? self.scrollView.minimumZoomScale : self.scrollView.maximumZoomScale
         
         let scrollViewSize = self.scrollView.bounds.size
@@ -90,7 +92,7 @@ extension PhotoBrowserCell : UIScrollViewDelegate {
         
         let rectToZoom = CGRect(x: x, y: y, width: width, height: height)
         
-        self.scrollView.zoomToRect(rectToZoom, animated: true)
+        self.scrollView.zoom(to: rectToZoom, animated: true)
     }
     
 }

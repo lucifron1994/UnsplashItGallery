@@ -26,58 +26,68 @@ class InfoViewController: UIViewController {
     
     
     //MARK: - Action
-    @IBAction func clearCache(sender: AnyObject) {
-        let cache = KingfisherManager.sharedManager.cache
+    @IBAction func clearCache(_ sender: AnyObject) {
+        let cache = KingfisherManager.shared.cache
         cache.clearDiskCache()
     
-        clearCacheButton.setTitle(NSLocalizedString("clearCache", comment: ""), forState: .Normal)
+        clearCacheButton.setTitle(NSLocalizedString("clearCache", comment: ""), for: .normal)
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     
     //MARK: - Private 
     func getCacheSize(){
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-            
-            let fm = NSFileManager.defaultManager()
+        
+        DispatchQueue.global().async { 
+            let fm = FileManager.default
             let rootPath:String = NSHomeDirectory() + "/Library/Caches/com.onevcat.Kingfisher.ImageCache.default/"
             var totolSize = 0
-            let files = try? fm.contentsOfDirectoryAtPath(rootPath)
+            let files = try? fm.contentsOfDirectory(atPath: rootPath)
             
-            if fm.fileExistsAtPath(rootPath){
+            if fm.fileExists(atPath: rootPath){
                 for item in files!{
                     let filePath = rootPath + item
                     totolSize += self.fileSizeAtPath(filePath)
                 }
             }
+            
             let mb = Double(totolSize) / (1000.0*1000.0)
             let cacheStr = String(format: "%@（%.2fMB)",NSLocalizedString("clearCache", comment: ""),mb)
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.clearCacheButton.setTitle(cacheStr, forState: .Normal)
-            })
+            DispatchQueue.main.async(execute: {
+                self.clearCacheButton.setTitle(cacheStr, for: .normal)
+            });
+            
+
         }
+        
+//        dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0).asynchronously(DispatchQueue.global) { () -> Void in
+//            
+//            //            dispatch_get_main_queue().asynchronously(DispatchQueue.mainexecute: { () -> Void in
+////                self.clearCacheButton.setTitle(cacheStr, for: .normal)
+////            })
+//        }
         
     }
 
     
-    func fileSizeAtPath(filePath: String) -> Int{
-        let fm = NSFileManager.defaultManager()
-        if fm.fileExistsAtPath(filePath){
-            let attr = try? fm.attributesOfItemAtPath(filePath)[NSFileSize]
+    func fileSizeAtPath(_ filePath: String) -> Int{
+        let fm = FileManager.default
+        if fm.fileExists(atPath: filePath){
+            let attr = try? fm.attributesOfItem(atPath: filePath)[FileAttributeKey.size]
             return attr as! Int
         }else{
             return 0
         }
     }
     
-    
     //MARK: - Others Setting
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override var preferredStatusBarStyle: UIStatusBarStyle{
+        return .lightContent
     }
+    
     
 }

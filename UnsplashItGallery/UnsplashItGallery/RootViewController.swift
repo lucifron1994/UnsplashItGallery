@@ -7,10 +7,12 @@
 //
 
 import UIKit
-import Alamofire
+//import Alamofire
+import DGElasticPullToRefresh
+//import ReachabilitySwift
 
-let kWidth = UIScreen.mainScreen().bounds.size.width
-let kHeight = UIScreen.mainScreen().bounds.size.height
+let kWidth = UIScreen.main.bounds.size.width
+let kHeight = UIScreen.main.bounds.size.height
 
 let kRootViewImageWidth = kWidth*2
 let kRootViewImageHeight = kWidth/16*9*2
@@ -26,27 +28,27 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     @IBOutlet weak var tableView: UITableView!
     
-    private var jsonArray:[AnyObject]?
-    private var imagesList:[ImageModel]?
+    fileprivate var jsonArray:[AnyObject]?
+    fileprivate var imagesList:[ImageModel]?
     
-    private var numberOfPage = 0
-    private var pageImagesCount = 10
+    fileprivate var numberOfPage = 0
+    fileprivate var pageImagesCount = 10
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.separatorStyle = .None
+        tableView.separatorStyle = .none
         
         //Add pullToRefresh
         let loadingView = DGElasticPullToRefreshLoadingViewCircle()
-        loadingView.tintColor = UIColor.whiteColor()
+        loadingView.tintColor = UIColor.white
         tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             self!.getLatestData()
             self?.tableView.dg_stopLoading()
             }, loadingView: loadingView)
-        tableView.dg_setPullToRefreshBackgroundColor(UIColor.whiteColor())
-        tableView.dg_setPullToRefreshFillColor(UIColor.blackColor())
+        tableView.dg_setPullToRefreshBackgroundColor(UIColor.white)
+        tableView.dg_setPullToRefreshFillColor(UIColor.black)
         
         //检查JSON有的话先用旧的并刷新
         if  DataStorageTool.fileExist() {
@@ -63,40 +65,40 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
     func checkNetConnection(){
         
-       let reachability = try? Reachability.reachabilityForInternetConnection()
-        //判断连接状态
-        if reachability!.isReachable(){
-//            print("网络可用")
-        }else{
-//            print("网络不可用")
-            ShowAlert.showAlert(NSLocalizedString("noNetwork", comment: ""), controller: self)
-        }
+//       let reachability = Reachability.init()
+//        //判断连接状态
+//        if (reachability?.isReachable)!{
+////            print("网络可用")
+//        }else{
+////            print("网络不可用")
+//            ShowAlert.showAlert(NSLocalizedString("noNetwork", comment: ""), controller: self)
+//        }
         
     }
     
     
     //MARK: - Fetch Data
     func getLatestData(){
-        Alamofire.request(.GET, BaseUrl, parameters: nil)
-            .responseJSON { response in
-                
-                if let JSON : [AnyObject] = response.result.value as? [AnyObject]{
-                    
-                    if (DataStorageTool.checkFileIsSame(JSON)){
-                        return
-                    }else{
-                        self.jsonArray = [AnyObject]()
-                        self.jsonArray = JSON
-                        DataStorageTool.saveJsonData(JSON)
-                        self.updateJSONData()
-                    }
-                    
-                }else{
-                    
-                    ShowAlert.showAlert(NSLocalizedString("failedToGetLatestData", comment: ""), controller: self)
-                }
-                
-        }
+//        Alamofire.request(.GET, BaseUrl, parameters: nil)
+//            .responseJSON { response in
+//                
+//                if let JSON : [AnyObject] = response.result.value as? [AnyObject]{
+//                    
+//                    if (DataStorageTool.checkFileIsSame(JSON)){
+//                        return
+//                    }else{
+//                        self.jsonArray = [AnyObject]()
+//                        self.jsonArray = JSON
+//                        DataStorageTool.saveJsonData(JSON)
+//                        self.updateJSONData()
+//                    }
+//                    
+//                }else{
+//                    
+//                    ShowAlert.showAlert(NSLocalizedString("failedToGetLatestData", comment: ""), controller: self)
+//                }
+//                
+//        }
 
     }
     
@@ -108,7 +110,7 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             let frontIndex = (self.jsonArray?.count)! - 1
             let backIndex = ((self.jsonArray?.count)! - self.pageImagesCount)
             
-            for i in (backIndex...frontIndex).reverse() {
+            for i in (backIndex...frontIndex).reversed() {
                 print(i)
                     let model = ImageModel()
                     model.imageId = self.jsonArray![i]["id"] as? Int
@@ -135,7 +137,7 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func loadTenOldData(){
         let frontIndex = (self.jsonArray?.count)!-1 - numberOfPage*pageImagesCount
         let backIndex = ((self.jsonArray?.count)!-self.pageImagesCount - numberOfPage*pageImagesCount)
-        for i in (backIndex...frontIndex).reverse() {
+        for i in (backIndex...frontIndex).reversed() {
             print("old \(i)")
             let model = ImageModel()
             model.imageId = self.jsonArray![i]["id"] as? Int
@@ -160,7 +162,7 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     
     //MARK: - Pull Up Refresh - add Old Data
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if scrollView.contentOffset.y + scrollView.frame.size.height - kPullUpOffset > scrollView.contentSize.height{
 //                print("load more")
             //加载更旧的数据10条
@@ -172,33 +174,34 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     //MARK: - Action
     
-    @IBAction func getRandomImage(sender: AnyObject) {
+    @IBAction func getRandomImage(_ sender: AnyObject) {
         if self.jsonArray != nil {
             let random: UInt32 = UInt32((self.jsonArray?.count)!)
             let randomIndex = Int(arc4random_uniform(random))
-            let indexPath = NSIndexPath(forItem: randomIndex, inSection: 0)
-            
-            
+//            let indexPath = NSIndexPath(forItem: randomIndex, inSection: 0)
+            let indexPath = NSIndexPath(row: randomIndex, section: 0)
+
             let sb = UIStoryboard(name: "Main", bundle: nil)
-            let detailVC = sb.instantiateViewControllerWithIdentifier("photoBrowser") as! PhotoBrowserController
+            let detailVC = sb.instantiateViewController(withIdentifier: "photoBrowser") as! PhotoBrowserController
             detailVC.currentIndexPath = indexPath
-            detailVC.jsonArray  = self.jsonArray?.reverse()
-            detailVC.modalTransitionStyle = .CrossDissolve
-            presentViewController(detailVC, animated: true, completion: nil)
+            detailVC.jsonArray  = self.jsonArray?.reversed()
+            detailVC.modalTransitionStyle = .crossDissolve
+            present(detailVC, animated: true, completion: nil)
 
         }
     }
     
     //MARK: - TableView Delegate
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return kWidth/16.0*9.0
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.imagesList?.count == nil{
             return 0;
         }else {
@@ -206,11 +209,10 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell:MainTableViewCell? = tableView.dequeueReusableCell(withIdentifier: kCellID, for: indexPath as IndexPath) as? MainTableViewCell
         
-        let cell:MainTableViewCell? = tableView.dequeueReusableCellWithIdentifier(kCellID, forIndexPath: indexPath) as? MainTableViewCell
-        
-        if (indexPath.row < self.imagesList?.count){
+        if (indexPath.row < (self.imagesList?.count)!){
             let model = self.imagesList![indexPath.row]
             cell?.setImageDataSource(model)
         }
@@ -219,16 +221,16 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.performSegueWithIdentifier(kToPhotoBrowserSegue, sender: indexPath)
+    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.performSegue(withIdentifier: kToPhotoBrowserSegue, sender: indexPath)
     }
     
     //MARK: - Switch Controller
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == kToPhotoBrowserSegue {
-            let detail = segue.destinationViewController as! PhotoBrowserController
+            let detail = segue.destination as! PhotoBrowserController
             detail.currentIndexPath = sender as? NSIndexPath
-            detail.jsonArray  = self.jsonArray?.reverse()
+            detail.jsonArray  = self.jsonArray?.reversed()
         }
     }
     

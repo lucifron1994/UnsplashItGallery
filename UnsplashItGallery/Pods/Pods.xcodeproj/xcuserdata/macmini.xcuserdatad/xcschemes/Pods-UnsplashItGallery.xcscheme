@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0730"
+   LastUpgradeVersion = "0700"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "43BEC3F8C621D97B71A1FC567022934E"
+               BlueprintIdentifier = "CAD30F3D5AF5FB211FEEF73E8A2BD4C8"
                BuildableName = "Pods_UnsplashItGallery.framework"
                BlueprintName = "Pods-UnsplashItGallery"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "43BEC3F8C621D97B71A1FC567022934E"
+            BlueprintIdentifier = "CAD30F3D5AF5FB211FEEF73E8A2BD4C8"
             BuildableName = "Pods_UnsplashItGallery.framework"
             BlueprintName = "Pods-UnsplashItGallery"
             ReferencedContainer = "container:Pods.xcodeproj">
@@ -60,15 +60,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "43BEC3F8C621D97B71A1FC567022934E"
-            BuildableName = "Pods_UnsplashItGallery.framework"
-            BlueprintName = "Pods-UnsplashItGallery"
-            ReferencedContainer = "container:Pods.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

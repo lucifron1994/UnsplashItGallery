@@ -17,8 +17,8 @@ class DataStorageTool: NSObject {
     //MARK 检测数据表是否存在
     class func fileExist()->Bool{
         
-        let fm = NSFileManager.defaultManager()
-        if fm.fileExistsAtPath(cachePath){
+        let fm = FileManager.default
+        if fm.fileExists(atPath: cachePath){
              return true
         }else{
             return false
@@ -26,9 +26,9 @@ class DataStorageTool: NSObject {
     }
     
     //MARK 保存数据表
-    class func saveJsonData(data: [AnyObject]){
+    class func saveJsonData(_ data: [AnyObject]){
         let array = NSArray(array: data)
-        array.writeToFile(cachePath, atomically: true)
+        array.write(toFile: cachePath, atomically: true)
     }
     
     //MARK 读取数据表
@@ -39,7 +39,7 @@ class DataStorageTool: NSObject {
     
     
     //MARK 检查文件中内容个数是否相同
-    class func checkFileIsSame(newData:[AnyObject]) -> Bool{
+    class func checkFileIsSame(_ newData:[AnyObject]) -> Bool{
         let oldData = getJsonData()
         
         if oldData == nil{

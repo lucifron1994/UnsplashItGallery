@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Kingfisher
+//import Kingfisher
 
 private let ImageCellID = "ImageCellID"
 private let ImageMargin : CGFloat = 20
@@ -29,11 +29,11 @@ class PhotoBrowserController: UIViewController, UICollectionViewDataSource{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        mainCollectionView.registerNib(UINib.init(nibName: "PhotoBrowserCell", bundle: nil), forCellWithReuseIdentifier: ImageCellID)
+        mainCollectionView.register(UINib.init(nibName: "PhotoBrowserCell", bundle: nil), forCellWithReuseIdentifier: ImageCellID)
         
         //滚动CollectionView到目标位置
         view.layoutIfNeeded()
-        mainCollectionView.scrollToItemAtIndexPath(currentIndexPath!, atScrollPosition: .CenteredHorizontally, animated: false)
+        mainCollectionView.scrollToItem(at: currentIndexPath! as IndexPath, at: .centeredHorizontally, animated: false)
         
     }
     
@@ -41,29 +41,29 @@ class PhotoBrowserController: UIViewController, UICollectionViewDataSource{
         super.viewDidLayoutSubviews()
     }
     
-    @IBAction func share(sender: AnyObject) {
+    @IBAction func share(_ sender: AnyObject) {
         
-        let cell : PhotoBrowserCell = mainCollectionView.cellForItemAtIndexPath(getCurrentIndex()) as! PhotoBrowserCell
+        let cell : PhotoBrowserCell = mainCollectionView.cellForItem(at: getCurrentIndex() as IndexPath) as! PhotoBrowserCell
         
         if let shareImage :UIImage = cell.imageView_full.image {
             let activity = UIActivityViewController(activityItems: [shareImage], applicationActivities: nil)
             
-            if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            if UIDevice.current.userInterfaceIdiom == .pad {
                 let ppc = activity.popoverPresentationController
                 ppc?.sourceView = self.view
                 ppc?.sourceRect = CGRect(x: 10, y: 10, width: 2, height: 2)
-                ppc?.permittedArrowDirections = .Any
+                ppc?.permittedArrowDirections = .any
             }
             
-            self.presentViewController(activity, animated: true, completion: nil)
+            self.present(activity, animated: true, completion: nil)
         }
         
     }
     
     
-    @IBAction func savePhoto(sender: AnyObject) {
+    @IBAction func savePhoto(_ sender: AnyObject) {
         
-        tempView.hidden = false
+        tempView.isHidden = false
         downloadProgressView.progress = 0.0
         
         let imageDic =  jsonArray![getCurrentIndex().item]
@@ -75,66 +75,73 @@ class PhotoBrowserController: UIViewController, UICollectionViewDataSource{
         
         let url = NSURL(string:"https://unsplash.it/\(width)/\(height)?image=\(num)")
         
-        let downloader = ImageDownloader(name: "downloader")
-        downloader.downloadImageWithURL(url!, progressBlock: { (receivedSize, totalSize) in
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.downloadProgressView.progress = CGFloat(receivedSize) / CGFloat(totalSize)
-            })
-            
-        }) { (image, error, imageURL, originalData) in
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.tempView.hidden = true
-            })
-            
-            if error != nil {
-                ShowAlert.showAlert(NSLocalizedString("error", comment: ""), controller: self)
-            }else{
-                if image != nil {
-                    UIImageWriteToSavedPhotosAlbum(image!, self, #selector(PhotoBrowserController.image(_:didFinishSavingWithError:contextInfo:)), nil)                    
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        let cell = self.mainCollectionView.cellForItemAtIndexPath(self.getCurrentIndex()) as? PhotoBrowserCell
-                        cell!.imageView_full.image = image
-                    })
-                }
-                
-            }
-        }
+//        let downloader = ImageDownloader(name: "downloader")
+//        
+//        
+//        downloader.downloadImageWithURL(url!, progressBlock: { (receivedSize, totalSize) in
+//            
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                self.downloadProgressView.progress = CGFloat(receivedSize) / CGFloat(totalSize)
+//            })
+//            
+//        }) { (image, error, imageURL, originalData) in
+//            
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                self.tempView.hidden = true
+//            })
+//            
+//            if error != nil {
+//                ShowAlert.showAlert(NSLocalizedString("error", comment: ""), controller: self)
+//            }else{
+//                if image != nil {
+//                    UIImageWriteToSavedPhotosAlbum(image!, self, #selector(PhotoBrowserController.image(_:didFinishSavingWithError:contextInfo:)), nil)                    
+//                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                        let cell = self.mainCollectionView.cellForItemAtIndexPath(self.getCurrentIndex()) as? PhotoBrowserCell
+//                        cell!.imageView_full.image = image
+//                    })
+//                }
+//                
+//            }
+//        }
         
     }
     
-    @IBAction func dismiss(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func dismiss(_ sender: AnyObject) {
+        dismiss(animated: true, completion: nil)
     }
     
     
-    @IBAction func tapView(sender: AnyObject) {
-        if toolBar.hidden{
-            toolBar.hidden = false
+    @IBAction func tapView(_ sender: AnyObject) {
+        if toolBar.isHidden{
+            toolBar.isHidden = false
         }else{
-            toolBar.hidden = true
+            toolBar.isHidden = true
         }
     }
     
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         let beforeWidth = size.height
         let afterWidth = size.width
         let beforeOffset = mainCollectionView.contentOffset.x
         let afterOffset = beforeOffset / (beforeWidth / afterWidth)
         
-        UIView.animateWithDuration(0.3) {
+        UIView.animate(withDuration: 0.3) {
             self.mainCollectionView.contentOffset = CGPoint(x: afterOffset, y: 0)
         }
+
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+//    override func viewWillTransitionToSize(_ size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+//        
+//            }
+    
+    
+    override var prefersStatusBarHidden: Bool{
         return true
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override var preferredStatusBarStyle: UIStatusBarStyle{
+        return .lightContent
     }
     
     
@@ -143,38 +150,44 @@ class PhotoBrowserController: UIViewController, UICollectionViewDataSource{
 // MARK:- CollectionView
 extension PhotoBrowserController{
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return (jsonArray?.count)!
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    
+    @objc(collectionView:cellForItemAtIndexPath:) func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ImageCellID, forIndexPath: indexPath) as! PhotoBrowserCell
-//        print("Before \(cell.progressView.progress)")
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCellID, for: indexPath as IndexPath) as! PhotoBrowserCell
+        //        print("Before \(cell.progressView.progress)")
         
         let idString = jsonArray![indexPath.item]["id"] as! Int
         let url = NSURL(string:"https://unsplash.it/\(kHeight*2)/\(kWidth*2)?image=\(idString)")
         cell.tempImageURL = NSURL(string:"https://unsplash.it/\(kRootViewImageWidth)/\(kRootViewImageHeight)?image=\(idString)")
         cell.imageURL = url!
-//        print(cell.tempImageURL)
-
+        //        print(cell.tempImageURL)
+        
         print("self \(view.frame.size.width) coll \(collectionView.frame.size.width) image:\(cell.imageView_full.frame.width)");
         
         return cell
+
     }
+    
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+//        
+//            }
     
 }
 
 extension PhotoBrowserController{
-    private  func getCurrentIndex()-> NSIndexPath {
+    fileprivate  func getCurrentIndex()-> NSIndexPath {
         let index : Int = Int(mainCollectionView.contentOffset.x / self.view.frame.size.width)
         
-        
-        return NSIndexPath(forItem: index, inSection: 0)
+        return NSIndexPath(row: index, section: 0)
+//        return NSIndexPath(forItem: index, inSection: 0)
     }
     
     
-    func image(image: UIImage, didFinishSavingWithError: NSError?, contextInfo: AnyObject) {
+    func image(_ image: UIImage, didFinishSavingWithError: NSError?, contextInfo: AnyObject) {
         if didFinishSavingWithError != nil {
             ShowAlert.showAlert(NSLocalizedString("error", comment: ""), controller: self)
         }else{

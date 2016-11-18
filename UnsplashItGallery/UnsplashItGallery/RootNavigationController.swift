@@ -22,12 +22,19 @@ class RootNavigationController: UINavigationController {
     
     
     //MARK: - Others Setting
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return .Portrait
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
+        return .portrait
     }
     
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate: Bool{
         return false
     }
+    
+//    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+//    }
+//    
+//    override func shouldAutorotate() -> Bool {
+//        return false
+//    }
 
 }

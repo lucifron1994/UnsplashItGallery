@@ -1,13 +1,18 @@
 PODS:
-  - Alamofire (3.3.1)
-  - Kingfisher (2.2.2)
+  - DGElasticPullToRefresh (1.1)
+  - Kingfisher (3.2.1)
+  - ReachabilitySwift (3)
 
 DEPENDENCIES:
-  - Alamofire (= 3.3.1)
-  - Kingfisher (= 2.2.2)
+  - DGElasticPullToRefresh
+  - Kingfisher
+  - ReachabilitySwift (~> 3)
 
 SPEC CHECKSUMS:
-  Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
-  Kingfisher: 7e8de5b0cf7b5dc8ec559d193029a0859df93ef1
+  DGElasticPullToRefresh: 28f11a6026302a90f8ffebbc6e24748e584dddd3
+  Kingfisher: 64ef28c6d3d6f344e3ae2d7f5c9da80439505d99
+  ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 18d1516ef237b43d2a88e5f01555202d648d1e48
+
+COCOAPODS: 1.0.1
