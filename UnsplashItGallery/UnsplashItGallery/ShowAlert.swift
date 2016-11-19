@@ -15,13 +15,12 @@ class ShowAlert: NSObject {
         let alertView = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         controller.present(alertView, animated: false, completion: nil)
         
-//        let time: TimeInterval = 2.0
-        
-//        let delay = DispatchTime.now(dispatch_time_t(DispatchTime.now),
-//            Int64(time * Double(NSEC_PER_SEC)))
-//        dispatch_after(delay, DispatchQueue.main) {
-//            alertView.dismiss(animated: true, completion: nil)
-//        }
+        let deadlineTime = DispatchTime.now() + .seconds(2)
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+            alertView.dismiss(animated: true, completion: nil)
+
+        }
+
 
     }
     

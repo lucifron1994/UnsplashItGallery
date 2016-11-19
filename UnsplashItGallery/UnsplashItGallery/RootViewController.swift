@@ -65,41 +65,39 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
     func checkNetConnection(){
         
-//       let reachability = Reachability.init()
-//        //判断连接状态
-//        if (reachability?.isReachable)!{
-////            print("网络可用")
-//        }else{
-////            print("网络不可用")
-//            ShowAlert.showAlert(NSLocalizedString("noNetwork", comment: ""), controller: self)
-//        }
+       let reachability = Reachability.init()
+        //判断连接状态
+        if (reachability?.isReachable)!{
+            print("网络可用")
+        }else{
+            print("网络不可用")
+            ShowAlert.showAlert(NSLocalizedString("noNetwork", comment: ""), controller: self)
+        }
         
     }
     
     
     //MARK: - Fetch Data
     func getLatestData(){
-//        Alamofire.request(.GET, BaseUrl, parameters: nil)
-//            .responseJSON { response in
-//                
-//                if let JSON : [AnyObject] = response.result.value as? [AnyObject]{
-//                    
-//                    if (DataStorageTool.checkFileIsSame(JSON)){
-//                        return
-//                    }else{
-//                        self.jsonArray = [AnyObject]()
-//                        self.jsonArray = JSON
-//                        DataStorageTool.saveJsonData(JSON)
-//                        self.updateJSONData()
-//                    }
-//                    
-//                }else{
-//                    
-//                    ShowAlert.showAlert(NSLocalizedString("failedToGetLatestData", comment: ""), controller: self)
-//                }
-//                
-//        }
-//        
+        
+        Alamofire.request(BaseUrl).responseJSON { response in
+            if let JSON : [AnyObject] = response.result.value as? [AnyObject]{
+                
+                if (DataStorageTool.checkFileIsSame(JSON)){
+                    return
+                }else{
+                    self.jsonArray = [AnyObject]()
+                    self.jsonArray = JSON
+                    DataStorageTool.saveJsonData(JSON)
+                    self.updateJSONData()
+                }
+                
+            }else{
+                
+                ShowAlert.showAlert(NSLocalizedString("failedToGetLatestData", comment: ""), controller: self)
+            }
+
+        }
 
     }
     

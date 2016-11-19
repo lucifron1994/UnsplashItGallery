@@ -29,12 +29,6 @@ class RootNavigationController: UINavigationController {
     override var shouldAutorotate: Bool{
         return false
     }
-    
-//    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-//    }
-//    
-//    override func shouldAutorotate() -> Bool {
-//        return false
-//    }
+
 
 }

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-//import Kingfisher
+import Kingfisher
 
 private let ImageCellID = "ImageCellID"
 private let ImageMargin : CGFloat = 20
@@ -66,43 +66,46 @@ class PhotoBrowserController: UIViewController, UICollectionViewDataSource{
         tempView.isHidden = false
         downloadProgressView.progress = 0.0
         
-//        let imageDic =  jsonArray![getCurrentIndex().item]
+        let imageDic =  jsonArray![getCurrentIndex().item]
         
-//        let num = imageDic["id"] as!
-//        Int
-//        let width = imageDic["width"] as! Int
-//        let height = imageDic["height"] as! Int
-//        
-//        let url = NSURL(string:"https://unsplash.it/\(width)/\(height)?image=\(num)")
+        let num = imageDic["id"] as!
+        Int
+        let width = imageDic["width"] as! Int
+        let height = imageDic["height"] as! Int
         
-//        let downloader = ImageDownloader(name: "downloader")
-//        
-//        
-//        downloader.downloadImageWithURL(url!, progressBlock: { (receivedSize, totalSize) in
-//            
-//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                self.downloadProgressView.progress = CGFloat(receivedSize) / CGFloat(totalSize)
-//            })
-//            
-//        }) { (image, error, imageURL, originalData) in
-//            
-//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                self.tempView.hidden = true
-//            })
-//            
-//            if error != nil {
-//                ShowAlert.showAlert(NSLocalizedString("error", comment: ""), controller: self)
-//            }else{
-//                if image != nil {
-//                    UIImageWriteToSavedPhotosAlbum(image!, self, #selector(PhotoBrowserController.image(_:didFinishSavingWithError:contextInfo:)), nil)                    
-//                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                        let cell = self.mainCollectionView.cellForItemAtIndexPath(self.getCurrentIndex()) as? PhotoBrowserCell
-//                        cell!.imageView_full.image = image
-//                    })
-//                }
-//                
-//            }
-//        }
+        let url = URL(string: "https://unsplash.it/\(width)/\(height)?image=\(num)")
+        
+        let downloader = ImageDownloader(name: "downloader")
+    
+        downloader.downloadImage(with: url!, options: nil, progressBlock: { (receivedSize, totalSize) in
+            DispatchQueue.main.async {
+                self.downloadProgressView.progress = CGFloat(receivedSize) / CGFloat(totalSize)
+            }
+            
+            }) {(image, error, imageURL, originalData) in
+                
+                DispatchQueue.main.async {
+                    self.tempView.isHidden = true
+                }
+                
+                
+                if error != nil {
+                    ShowAlert.showAlert(NSLocalizedString("error", comment: ""), controller: self)
+                }else{
+                    if image != nil {
+                        UIImageWriteToSavedPhotosAlbum(image!, self, #selector(PhotoBrowserController.image(_:didFinishSavingWithError:contextInfo:)), nil)
+                        DispatchQueue.main.async {
+                        
+                            
+                            let cell = self.mainCollectionView.cellForItem(at: self.getCurrentIndex() as IndexPath) as! PhotoBrowserCell
+                            cell.imageView_full.image = image
+                        }
+                    }
+                    
+                }
+
+        }
+        
         
     }
     
@@ -131,10 +134,6 @@ class PhotoBrowserController: UIViewController, UICollectionViewDataSource{
 
     }
     
-//    override func viewWillTransitionToSize(_ size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-//        
-//            }
-    
     
     override var prefersStatusBarHidden: Bool{
         return true
@@ -161,8 +160,8 @@ extension PhotoBrowserController{
         //        print("Before \(cell.progressView.progress)")
         
         let idString = jsonArray![indexPath.item]["id"] as! Int
-        let url = NSURL(string:"https://unsplash.it/\(kHeight*2)/\(kWidth*2)?image=\(idString)")
-        cell.tempImageURL = NSURL(string:"https://unsplash.it/\(kRootViewImageWidth)/\(kRootViewImageHeight)?image=\(idString)")
+        let url = URL(string:"https://unsplash.it/\(kHeight*2)/\(kWidth*2)?image=\(idString)")
+        cell.tempImageURL = URL(string:"https://unsplash.it/\(kRootViewImageWidth)/\(kRootViewImageHeight)?image=\(idString)")
         cell.imageURL = url!
         //        print(cell.tempImageURL)
         
@@ -172,10 +171,6 @@ extension PhotoBrowserController{
 
     }
     
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-//        
-//            }
-    
 }
 
 extension PhotoBrowserController{
@@ -183,7 +178,6 @@ extension PhotoBrowserController{
         let index : Int = Int(mainCollectionView.contentOffset.x / self.view.frame.size.width)
         
         return NSIndexPath(row: index, section: 0)
-//        return NSIndexPath(forItem: index, inSection: 0)
     }
     
     

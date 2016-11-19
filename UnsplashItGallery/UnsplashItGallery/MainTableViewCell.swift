@@ -7,7 +7,7 @@
 //
 
 import UIKit
-//import Kingfisher
+import Kingfisher
 
 class MainTableViewCell: UITableViewCell {
     
@@ -15,10 +15,11 @@ class MainTableViewCell: UITableViewCell {
     
     func setImageDataSource(_ model: ImageModel){
         
-//        cellImageView.kf_showIndicatorWhenLoading = true
-//        let num = model.imageId
-//        let url = NSURL(string:"https://unsplash.it/\(kRootViewImageWidth)/\(kRootViewImageHeight)?image=\(num!)")
-//        self.cellImageView.kf_setImageWithURL(url!)
+        cellImageView.kf.indicatorType = .activity
+        
+        let num = model.imageId
+        let url = URL(string:"https://unsplash.it/\(kRootViewImageWidth)/\(kRootViewImageHeight)?image=\(num!)")
+        self.cellImageView.kf.setImage(with: url)
     }
     
 }

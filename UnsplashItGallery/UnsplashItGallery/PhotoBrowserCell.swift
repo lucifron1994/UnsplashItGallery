@@ -7,7 +7,7 @@
 //
 
 import UIKit
-//import Kingfisher
+import Kingfisher
 
 
 class PhotoBrowserCell: UICollectionViewCell {
@@ -19,29 +19,28 @@ class PhotoBrowserCell: UICollectionViewCell {
 
     @IBOutlet weak var progressView: ProgressView!
     
-    var tempImageURL : NSURL?
+    var tempImageURL : URL?
     
-    var imageURL : NSURL? {
+    var imageURL : URL? {
         didSet {
             
             self.progressView.isHidden = false
             
-//            imageView_full.
-//            
-//            imageView_full.kf_setImageWithURL(imageURL!, placeholderImage: nil, optionsInfo: nil, progressBlock: { (receivedSize, totalSize) in
-//                
-//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                    self.progressView.progress = CGFloat(receivedSize) / CGFloat(totalSize)
-//                })
-//            }) { (image, error, cacheType, imageURL) in
-//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                    self.progressView.hidden = true
-//                })
-//                if (error != nil && image == nil) {
-//                    self.imageView_full.kf_setImageWithURL(self.tempImageURL!)
-//                }
-//            }
-//            
+            imageView_full.kf.setImage(with: imageURL!, placeholder: nil, options: nil, progressBlock: { (receivedSize, totalSize) in
+                DispatchQueue.main.async {
+                    self.progressView.progress = CGFloat(receivedSize) / CGFloat(totalSize)
+                }
+            }) { (image, error, cacheType, imageURL) in
+                DispatchQueue.main.async {
+                    self.progressView.isHidden = true
+                }
+                if (error != nil && image == nil) {
+                    self.imageView_full.kf.setImage(with: self.tempImageURL!)
+                }
+            }
+            
+            
+            
         }
     }
     
