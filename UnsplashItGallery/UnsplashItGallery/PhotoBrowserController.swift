@@ -37,9 +37,6 @@ class PhotoBrowserController: UIViewController, UICollectionViewDataSource{
         
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
     
     @IBAction func share(_ sender: AnyObject) {
         

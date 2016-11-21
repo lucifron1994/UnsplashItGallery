@@ -117,15 +117,6 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     model.height = self.jsonArray![i]["height"] as? Int
                     self.imagesList?.append(model)
             }
-            
-//            for (var i = (self.jsonArray?.count)!-1; i > ((self.jsonArray?.count)!-1-self.pageImagesCount); i=i-1){
-//                 print(i)
-//                let model = ImageModel()
-//                model.imageId = self.jsonArray![i]["id"] as? Int
-//                model.width = self.jsonArray![i]["width"] as? Int
-//                model.height = self.jsonArray![i]["height"] as? Int
-//                self.imagesList?.append(model)
-//            }
 
             self.numberOfPage = 1
             self.tableView.reloadData()
@@ -145,16 +136,6 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             self.imagesList?.append(model)
         }
         
-//        for (var i = (self.jsonArray?.count)!-1 - numberOfPage*pageImagesCount; i > ((self.jsonArray?.count)!-self.pageImagesCount-1 - numberOfPage*pageImagesCount); i=i-1){
-//             print("old \(i)")
-//            if (i>0){
-//                let model = ImageModel()
-//                model.imageId = self.jsonArray![i]["id"] as? Int
-//                model.width = self.jsonArray![i]["width"] as? Int
-//                model.height = self.jsonArray![i]["height"] as? Int
-//                self.imagesList?.append(model)
-//            }
-//        }
         self.numberOfPage += 1
         self.tableView.reloadData()
     }
@@ -163,7 +144,6 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     //MARK: - Pull Up Refresh - add Old Data
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if scrollView.contentOffset.y + scrollView.frame.size.height - kPullUpOffset > scrollView.contentSize.height{
-//                print("load more")
             //加载更旧的数据10条
             if numberOfPage != 0{
                 loadTenOldData()
@@ -177,7 +157,6 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         if self.jsonArray != nil {
             let random: UInt32 = UInt32((self.jsonArray?.count)!)
             let randomIndex = Int(arc4random_uniform(random))
-//            let indexPath = NSIndexPath(forItem: randomIndex, inSection: 0)
             let indexPath = NSIndexPath(row: randomIndex, section: 0)
 
             let sb = UIStoryboard(name: "Main", bundle: nil)
