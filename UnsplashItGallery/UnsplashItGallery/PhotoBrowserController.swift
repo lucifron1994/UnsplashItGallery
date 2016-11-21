@@ -15,7 +15,7 @@ private let ImageMargin : CGFloat = 20
 
 class PhotoBrowserController: UIViewController, UICollectionViewDataSource{
     
-    var jsonArray : [AnyObject]?
+    var imagesList:[ImageModel]?
     var currentIndexPath : NSIndexPath?
     
     @IBOutlet weak var mainCollectionView: UICollectionView!
@@ -59,18 +59,12 @@ class PhotoBrowserController: UIViewController, UICollectionViewDataSource{
     
     
     @IBAction func savePhoto(_ sender: AnyObject) {
-        
         tempView.isHidden = false
         downloadProgressView.progress = 0.0
         
-        let imageDic =  jsonArray![getCurrentIndex().item]
+        let imageModel =  imagesList![getCurrentIndex().item]
         
-        let num = imageDic["id"] as!
-        Int
-        let width = imageDic["width"] as! Int
-        let height = imageDic["height"] as! Int
-        
-        let url = URL(string: "https://unsplash.it/\(width)/\(height)?image=\(num)")
+        let url = URL(string: "https://unsplash.it/\(imageModel.width)/\(imageModel.height)?image=\(imageModel.imageId)")
         
         let downloader = ImageDownloader(name: "downloader")
     
@@ -147,7 +141,7 @@ class PhotoBrowserController: UIViewController, UICollectionViewDataSource{
 extension PhotoBrowserController{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return (jsonArray?.count)!
+        return (imagesList?.count)!
     }
     
     
@@ -156,9 +150,10 @@ extension PhotoBrowserController{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCellID, for: indexPath as IndexPath) as! PhotoBrowserCell
         //        print("Before \(cell.progressView.progress)")
         
-        let idString = jsonArray![indexPath.item]["id"] as! Int
-        let url = URL(string:"https://unsplash.it/\(kHeight*2)/\(kWidth*2)?image=\(idString)")
-        cell.tempImageURL = URL(string:"https://unsplash.it/\(kRootViewImageWidth)/\(kRootViewImageHeight)?image=\(idString)")
+        let imageModel =  imagesList![indexPath.row]
+
+        let url = URL(string:"https://unsplash.it/\(kHeight*2)/\(kWidth*2)?image=\(imageModel.imageId)")
+        cell.tempImageURL = URL(string:"https://unsplash.it/\(kRootViewImageWidth)/\(kRootViewImageHeight)?image=\(imageModel.imageId)")
         cell.imageURL = url!
         //        print(cell.tempImageURL)
         

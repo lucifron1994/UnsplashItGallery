@@ -162,7 +162,7 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             let sb = UIStoryboard(name: "Main", bundle: nil)
             let detailVC = sb.instantiateViewController(withIdentifier: "photoBrowser") as! PhotoBrowserController
             detailVC.currentIndexPath = indexPath
-            detailVC.jsonArray  = self.jsonArray?.reversed()
+            detailVC.imagesList  = imagesList;
             detailVC.modalTransitionStyle = .crossDissolve
             present(detailVC, animated: true, completion: nil)
 
@@ -207,7 +207,7 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         if segue.identifier == kToPhotoBrowserSegue {
             let detail = segue.destination as! PhotoBrowserController
             detail.currentIndexPath = sender as? NSIndexPath
-            detail.jsonArray  = self.jsonArray?.reversed()
+            detail.imagesList = imagesList
         }
     }
     
