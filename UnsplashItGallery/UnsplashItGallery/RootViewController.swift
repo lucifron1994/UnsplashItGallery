@@ -21,7 +21,6 @@ let kRootViewImageHeight = kWidth/16*9*2
 private let kPullUpOffset:CGFloat = 20.0
 private let kToPhotoBrowserSegue = "photoBrowserSegue"
 private let kCellID = "imageCell"
-private let BaseUrl = "https://unsplash.it/list"
 
 
 class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
@@ -29,7 +28,7 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var tableView: UITableView!
     
     fileprivate var jsonArray:[AnyObject]?
-    fileprivate var imagesList:[ImageModel]?
+    fileprivate var imagesList:[String]?
     
     fileprivate var numberOfPage = 0
     fileprivate var pageImagesCount = 10
@@ -51,10 +50,10 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         tableView.dg_setPullToRefreshFillColor(UIColor.black)
         
         //检查JSON有的话先用旧的并刷新
-        if  DataStorageTool.fileExist() {
-            self.jsonArray = DataStorageTool.getJsonData()
-            updateJSONData()
-        }
+//        if  DataStorageTool.fileExist() {
+//            self.jsonArray = DataStorageTool.getJsonData()
+//            updateJSONData()
+//        }
         //获得最新json数据
         getLatestData()
         
@@ -79,19 +78,36 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     //MARK: - Fetch Data
     func getLatestData(){
+        //https://api.unsplash.com/photos/?client_id=43fa0a91d49b3e3be899945af844a074b88993756df1c3054b592e493a957fd7
+        let url = BaseURL + GETPhotosURL + "?client_id=" + ApplicationID;
+        print("请求首页数据 \(url)")
         
-        Alamofire.request(BaseUrl).responseJSON { response in
+        
+        imagesList = [String]()
+
+        Alamofire.request(url).responseJSON { response in
             if let JSON : [AnyObject] = response.result.value as? [AnyObject]{
                 
-                if (DataStorageTool.checkFileIsSame(JSON)){
-                    return
-                }else{
-                    self.jsonArray = [AnyObject]()
-                    self.jsonArray = JSON
-                    DataStorageTool.saveJsonData(JSON)
-                    self.updateJSONData()
+                for imageURL in JSON{
+                    let dic = imageURL as! Dictionary<String, Any>
+                    
+                    let imgurls = dic["urls"] as! Dictionary<String, String>
+    
+                    let imgurl = imgurls["small"]
+                    
+                    self.imagesList?.append(imgurl!)
                 }
                 
+//                if (DataStorageTool.checkFileIsSame(JSON)){
+//                    return
+//                }else{
+//                    self.jsonArray = [AnyObject]()
+//                    self.jsonArray = JSON
+//                    DataStorageTool.saveJsonData(JSON)
+//                    self.updateJSONData()
+//                }
+                
+                self.tableView.reloadData()
             }else{
                 
                 ShowAlert.showAlert(NSLocalizedString("failedToGetLatestData", comment: ""), controller: self)
@@ -102,43 +118,43 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     //结合JSON数据刷新UI
-    func updateJSONData(){
-        if self.jsonArray?.count != 0{
-            self.imagesList = [ImageModel]()
-            
-            let frontIndex = (self.jsonArray?.count)! - 1
-            let backIndex = ((self.jsonArray?.count)! - self.pageImagesCount)
-            
-            for i in (backIndex...frontIndex).reversed() {
-                print(i)
-                    let model = ImageModel()
-                    model.imageId = self.jsonArray![i]["id"] as? Int
-                    model.width = self.jsonArray![i]["width"] as? Int
-                    model.height = self.jsonArray![i]["height"] as? Int
-                    self.imagesList?.append(model)
-            }
-
-            self.numberOfPage = 1
-            self.tableView.reloadData()
-        }
-    }
+//    func updateJSONData(){
+//        if self.jsonArray?.count != 0{
+//            self.imagesList = [ImageModel]()
+//            
+//            let frontIndex = (self.jsonArray?.count)! - 1
+//            let backIndex = ((self.jsonArray?.count)! - self.pageImagesCount)
+//            
+//            for i in (backIndex...frontIndex).reversed() {
+//                print(i)
+//                    let model = ImageModel()
+//                    model.imageId = self.jsonArray![i]["id"] as? Int
+//                    model.width = self.jsonArray![i]["width"] as? Int
+//                    model.height = self.jsonArray![i]["height"] as? Int
+//                    self.imagesList?.append(model)
+//            }
+//
+//            self.numberOfPage = 1
+//            self.tableView.reloadData()
+//        }
+//    }
     
     //获取10条旧数据
-    func loadTenOldData(){
-        let frontIndex = (self.jsonArray?.count)!-1 - numberOfPage*pageImagesCount
-        let backIndex = ((self.jsonArray?.count)!-self.pageImagesCount - numberOfPage*pageImagesCount)
-        for i in (backIndex...frontIndex).reversed() {
-            print("old \(i)")
-            let model = ImageModel()
-            model.imageId = self.jsonArray![i]["id"] as? Int
-            model.width = self.jsonArray![i]["width"] as? Int
-            model.height = self.jsonArray![i]["height"] as? Int
-            self.imagesList?.append(model)
-        }
-        
-        self.numberOfPage += 1
-        self.tableView.reloadData()
-    }
+//    func loadTenOldData(){
+//        let frontIndex = (self.jsonArray?.count)!-1 - numberOfPage*pageImagesCount
+//        let backIndex = ((self.jsonArray?.count)!-self.pageImagesCount - numberOfPage*pageImagesCount)
+//        for i in (backIndex...frontIndex).reversed() {
+//            print("old \(i)")
+//            let model = ImageModel()
+//            model.imageId = self.jsonArray![i]["id"] as? Int
+//            model.width = self.jsonArray![i]["width"] as? Int
+//            model.height = self.jsonArray![i]["height"] as? Int
+//            self.imagesList?.append(model)
+//        }
+//        
+//        self.numberOfPage += 1
+//        self.tableView.reloadData()
+//    }
     
     
     //MARK: - Pull Up Refresh - add Old Data
@@ -146,28 +162,28 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         if scrollView.contentOffset.y + scrollView.frame.size.height - kPullUpOffset > scrollView.contentSize.height{
             //加载更旧的数据10条
             if numberOfPage != 0{
-                loadTenOldData()
+//                loadTenOldData()
             }
         }
     }
     
     //MARK: - Action
     
-    @IBAction func getRandomImage(_ sender: AnyObject) {
-        if self.jsonArray != nil {
-            let random: UInt32 = UInt32((self.jsonArray?.count)!)
-            let randomIndex = Int(arc4random_uniform(random))
-            let indexPath = NSIndexPath(row: randomIndex, section: 0)
-
-            let sb = UIStoryboard(name: "Main", bundle: nil)
-            let detailVC = sb.instantiateViewController(withIdentifier: "photoBrowser") as! PhotoBrowserController
-            detailVC.currentIndexPath = indexPath
-            detailVC.imagesList  = imagesList;
-            detailVC.modalTransitionStyle = .crossDissolve
-            present(detailVC, animated: true, completion: nil)
-
-        }
-    }
+//    @IBAction func getRandomImage(_ sender: AnyObject) {
+//        if self.jsonArray != nil {
+//            let random: UInt32 = UInt32((self.jsonArray?.count)!)
+//            let randomIndex = Int(arc4random_uniform(random))
+//            let indexPath = NSIndexPath(row: randomIndex, section: 0)
+//
+//            let sb = UIStoryboard(name: "Main", bundle: nil)
+//            let detailVC = sb.instantiateViewController(withIdentifier: "photoBrowser") as! PhotoBrowserController
+//            detailVC.currentIndexPath = indexPath
+//            detailVC.imagesList  = imagesList;
+//            detailVC.modalTransitionStyle = .crossDissolve
+//            present(detailVC, animated: true, completion: nil)
+//
+//        }
+//    }
     
     //MARK: - TableView Delegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -191,8 +207,10 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let cell:MainTableViewCell? = tableView.dequeueReusableCell(withIdentifier: kCellID, for: indexPath as IndexPath) as? MainTableViewCell
         
         if (indexPath.row < (self.imagesList?.count)!){
-            let model = self.imagesList![indexPath.row]
-            cell?.setImageDataSource(model)
+//            let model = self.imagesList![indexPath.row]
+//            cell?.setImageDataSource(model)
+            let url = self.imagesList![indexPath.row]
+            cell?.setImageURLString(url: url)
         }
         
         return cell!
@@ -207,7 +225,7 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         if segue.identifier == kToPhotoBrowserSegue {
             let detail = segue.destination as! PhotoBrowserController
             detail.currentIndexPath = sender as? NSIndexPath
-            detail.imagesList = imagesList
+//            detail.imagesList = imagesList
         }
     }
     

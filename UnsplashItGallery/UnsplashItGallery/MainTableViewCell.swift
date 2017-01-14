@@ -13,13 +13,20 @@ class MainTableViewCell: UITableViewCell {
     
     @IBOutlet weak var cellImageView: UIImageView!
     
+    
     func setImageDataSource(_ model: ImageModel){
+        
         
         cellImageView.kf.indicatorType = .activity
         
-        let num = model.imageId
-        let url = URL(string:"https://unsplash.it/\(kRootViewImageWidth)/\(kRootViewImageHeight)?image=\(num!)")
-        self.cellImageView.kf.setImage(with: url)
+//        let num = model.imageId
+//        let url = URL(string:"https://unsplash.it/\(kRootViewImageWidth)/\(kRootViewImageHeight)?image=\(num!)")
+//        self.cellImageView.kf.setImage(with: url)
     }
-    
+
+    func setImageURLString(url : String){
+        cellImageView.kf.indicatorType = .activity
+        let u = URL(string: url)
+        self.cellImageView.kf.setImage(with: u)
+    }
 }

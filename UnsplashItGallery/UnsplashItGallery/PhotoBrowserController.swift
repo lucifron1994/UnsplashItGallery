@@ -64,11 +64,11 @@ class PhotoBrowserController: UIViewController, UICollectionViewDataSource{
         
         let imageModel =  imagesList![getCurrentIndex().item]
         
-        let url = URL(string: "https://unsplash.it/\(imageModel.width)/\(imageModel.height)?image=\(imageModel.imageId)")
+//        let url// = URL(string: "https://unsplash.it/\(imageModel.width)/\(imageModel.height)?image=\(imageModel.imageId)")
         
         let downloader = ImageDownloader(name: "downloader")
     
-        downloader.downloadImage(with: url!, options: nil, progressBlock: { (receivedSize, totalSize) in
+        downloader.downloadImage(with: URL(string:"")!, options: nil, progressBlock: { (receivedSize, totalSize) in
             DispatchQueue.main.async {
                 self.downloadProgressView.progress = CGFloat(receivedSize) / CGFloat(totalSize)
             }
@@ -152,9 +152,9 @@ extension PhotoBrowserController{
         
         let imageModel =  imagesList![indexPath.row]
 
-        let url = URL(string:"https://unsplash.it/\(kHeight*2)/\(kWidth*2)?image=\(imageModel.imageId)")
-        cell.tempImageURL = URL(string:"https://unsplash.it/\(kRootViewImageWidth)/\(kRootViewImageHeight)?image=\(imageModel.imageId)")
-        cell.imageURL = url!
+//        let url = URL(string:"https://unsplash.it/\(kHeight*2)/\(kWidth*2)?image=\(imageModel.imageId)")
+//        cell.tempImageURL = URL(string:"https://unsplash.it/\(kRootViewImageWidth)/\(kRootViewImageHeight)?image=\(imageModel.imageId)")
+//        cell.imageURL = url!
         //        print(cell.tempImageURL)
         
         print("self \(view.frame.size.width) coll \(collectionView.frame.size.width) image:\(cell.imageView_full.frame.width)");
