@@ -7,10 +7,8 @@
 //
 
 import UIKit
-import Alamofire
 import DGElasticPullToRefresh
 import ReachabilitySwift
-import HandyJSON
 
 
 private let kPullUpOffset:CGFloat = 20.0
@@ -22,15 +20,29 @@ class HomepageViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     @IBOutlet weak var tableView: UITableView!
     
-    fileprivate var imagesList:[ImageModel] = [ImageModel]()
-    
-    fileprivate var numberOfPage = 0
-    fileprivate var pageImagesCount = 10
+    let viewModel = HomepageViewModel()
+ 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+       
+       setUI()
+        //检查JSON有的话先用旧的并刷新
+//        if  DataStorageTool.fileExist() {
+//            self.jsonArray = DataStorageTool.getJsonData()
+//            updateJSONData()s
+//        }
+        //获得最新json数据
+        getLatestData()
+        
+        //检测网络
+        checkNetConnection()
+    }
+    
+    private func setUI(){
         tableView.separatorStyle = .none
+        tableView.rowHeight = kWidth/16.0*9.0
         
         //Add pullToRefresh
         let loadingView = DGElasticPullToRefreshLoadingViewCircle()
@@ -41,19 +53,7 @@ class HomepageViewController: UIViewController,UITableViewDelegate,UITableViewDa
             }, loadingView: loadingView)
         tableView.dg_setPullToRefreshBackgroundColor(UIColor.white)
         tableView.dg_setPullToRefreshFillColor(UIColor.black)
-        
-        //检查JSON有的话先用旧的并刷新
-//        if  DataStorageTool.fileExist() {
-//            self.jsonArray = DataStorageTool.getJsonData()
-//            updateJSONData()
-//        }
-        //获得最新json数据
-        getLatestData()
-        
-        //检测网络
-        checkNetConnection()
     }
-    
 
     func checkNetConnection(){
         
@@ -70,36 +70,15 @@ class HomepageViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     
     //MARK: - Fetch Data
-    func getLatestData(){
-        //https://api.unsplash.com/photos/?client_id=43fa0a91d49b3e3be899945af844a074b88993756df1c3054b592e493a957fd7
-        let url = BaseURL + GETPhotosURL + "?client_id=" + ApplicationID;
-        print("请求首页数据 \(url)")
+    private func getLatestData(){
         
-
-        Alamofire.request(url).responseJSON { response in
-            if let JSON : [AnyObject] = response.result.value as? [AnyObject]{
-                
-                for imageURL in JSON{
-                    let model : ImageModel = JSONDeserializer.deserializeFrom(dict: imageURL as? NSDictionary)!
-                    self.imagesList.append(model)
-                }
-                
-//                if (DataStorageTool.checkFileIsSame(JSON)){
-//                    return
-//                }else{
-//                    self.jsonArray = [AnyObject]()
-//                    self.jsonArray = JSON
-//                    DataStorageTool.saveJsonData(JSON)
-//                    self.updateJSONData()
-//                }
-                
+        viewModel.getLatestData { (succeed) in
+            if succeed {
                 self.tableView.reloadData()
             }else{
                 ShowAlert.showAlert(NSLocalizedString("failedToGetLatestData", comment: ""), controller: self)
             }
-
         }
-
     }
     
     //结合JSON数据刷新UI
@@ -124,31 +103,18 @@ class HomepageViewController: UIViewController,UITableViewDelegate,UITableViewDa
 //        }
 //    }
     
-    //获取10条旧数据
-//    func loadTenOldData(){
-//        let frontIndex = (self.jsonArray?.count)!-1 - numberOfPage*pageImagesCount
-//        let backIndex = ((self.jsonArray?.count)!-self.pageImagesCount - numberOfPage*pageImagesCount)
-//        for i in (backIndex...frontIndex).reversed() {
-//            print("old \(i)")
-//            let model = ImageModel()
-//            model.imageId = self.jsonArray![i]["id"] as? Int
-//            model.width = self.jsonArray![i]["width"] as? Int
-//            model.height = self.jsonArray![i]["height"] as? Int
-//            self.imagesList?.append(model)
-//        }
-//        
-//        self.numberOfPage += 1
-//        self.tableView.reloadData()
-//    }
-    
     
     //MARK: - Pull Up Refresh - add Old Data
+    // 
+    //  为footer增加旋转加载，。
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if scrollView.contentOffset.y + scrollView.frame.size.height - kPullUpOffset > scrollView.contentSize.height{
-            //加载更旧的数据10条
-            if numberOfPage != 0{
-//                loadTenOldData()
-            }
+            viewModel.getMoreData(completion: { (succeed) in
+                if succeed {
+                    self.tableView.reloadData()
+                }
+            })
+            
         }
     }
     
@@ -171,23 +137,20 @@ class HomepageViewController: UIViewController,UITableViewDelegate,UITableViewDa
 //    }
     
     //MARK: - TableView Delegate
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return kWidth/16.0*9.0
-    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (self.imagesList.count)
+        return viewModel.imagesList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:MainTableViewCell? = tableView.dequeueReusableCell(withIdentifier: kCellID, for: indexPath as IndexPath) as? MainTableViewCell
         
-        if (indexPath.row < self.imagesList.count){
-            let model = self.imagesList[indexPath.row]
+        if (indexPath.row < self.viewModel.imagesList.count){
+            let model = self.viewModel.imagesList[indexPath.row]
             cell?.setImageDataSource(model)
         }
         

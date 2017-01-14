@@ -34,7 +34,6 @@ class PhotoBrowserController: UIViewController, UICollectionViewDataSource{
         //滚动CollectionView到目标位置
         view.layoutIfNeeded()
         mainCollectionView.scrollToItem(at: currentIndexPath! as IndexPath, at: .centeredHorizontally, animated: false)
-        
     }
     
     
@@ -61,10 +60,7 @@ class PhotoBrowserController: UIViewController, UICollectionViewDataSource{
     @IBAction func savePhoto(_ sender: AnyObject) {
         tempView.isHidden = false
         downloadProgressView.progress = 0.0
-        
-//        let imageModel =  imagesList![getCurrentIndex().item]
-        
-//        let url// = URL(string: "https://unsplash.it/\(imageModel.width)/\(imageModel.height)?image=\(imageModel.imageId)")
+    
         
         let downloader = ImageDownloader(name: "downloader")
     
