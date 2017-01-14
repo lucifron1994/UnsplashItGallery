@@ -5,6 +5,7 @@
 //  Created by wanghong on 2017/1/14.
 //  Copyright © 2017年 WangHong. All rights reserved.
 //
+import UIKit
 
 // MARK: - Application
 let ApplicationID = "43fa0a91d49b3e3be899945af844a074b88993756df1c3054b592e493a957fd7"
@@ -17,4 +18,5 @@ let BaseURL = "https://api.unsplash.com/"
 let GETPhotosURL = "photos"
 
 
-
+let kWidth = UIScreen.main.bounds.size.width
+let kHeight = UIScreen.main.bounds.size.height

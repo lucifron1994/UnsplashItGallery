@@ -1,5 +1,5 @@
 //
-//  RootViewController.swift
+//  HomepageViewController.swift
 //  UnsplashItGallery
 //
 //  Created by WangHong on 15/12/30.
@@ -10,12 +10,7 @@ import UIKit
 import Alamofire
 import DGElasticPullToRefresh
 import ReachabilitySwift
-
-let kWidth = UIScreen.main.bounds.size.width
-let kHeight = UIScreen.main.bounds.size.height
-
-let kRootViewImageWidth = kWidth*2
-let kRootViewImageHeight = kWidth/16*9*2
+import HandyJSON
 
 
 private let kPullUpOffset:CGFloat = 20.0
@@ -23,16 +18,14 @@ private let kToPhotoBrowserSegue = "photoBrowserSegue"
 private let kCellID = "imageCell"
 
 
-class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
+class HomepageViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
     @IBOutlet weak var tableView: UITableView!
     
-    fileprivate var jsonArray:[AnyObject]?
-    fileprivate var imagesList:[String]?
+    fileprivate var imagesList:[ImageModel] = [ImageModel]()
     
     fileprivate var numberOfPage = 0
     fileprivate var pageImagesCount = 10
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,20 +75,13 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let url = BaseURL + GETPhotosURL + "?client_id=" + ApplicationID;
         print("请求首页数据 \(url)")
         
-        
-        imagesList = [String]()
 
         Alamofire.request(url).responseJSON { response in
             if let JSON : [AnyObject] = response.result.value as? [AnyObject]{
                 
                 for imageURL in JSON{
-                    let dic = imageURL as! Dictionary<String, Any>
-                    
-                    let imgurls = dic["urls"] as! Dictionary<String, String>
-    
-                    let imgurl = imgurls["small"]
-                    
-                    self.imagesList?.append(imgurl!)
+                    let model : ImageModel = JSONDeserializer.deserializeFrom(dict: imageURL as? NSDictionary)!
+                    self.imagesList.append(model)
                 }
                 
 //                if (DataStorageTool.checkFileIsSame(JSON)){
@@ -109,7 +95,6 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 
                 self.tableView.reloadData()
             }else{
-                
                 ShowAlert.showAlert(NSLocalizedString("failedToGetLatestData", comment: ""), controller: self)
             }
 
@@ -190,27 +175,20 @@ class RootViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         return kWidth/16.0*9.0
     }
     
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.imagesList?.count == nil{
-            return 0;
-        }else {
-            return (self.imagesList?.count)!
-        }
+        return (self.imagesList.count)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:MainTableViewCell? = tableView.dequeueReusableCell(withIdentifier: kCellID, for: indexPath as IndexPath) as? MainTableViewCell
         
-        if (indexPath.row < (self.imagesList?.count)!){
-//            let model = self.imagesList![indexPath.row]
-//            cell?.setImageDataSource(model)
-            let url = self.imagesList![indexPath.row]
-            cell?.setImageURLString(url: url)
+        if (indexPath.row < self.imagesList.count){
+            let model = self.imagesList[indexPath.row]
+            cell?.setImageDataSource(model)
         }
         
         return cell!

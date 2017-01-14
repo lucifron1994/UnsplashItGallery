@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'FBC76602C08F1C9319E85760CB41E422'
-               BlueprintName = 'ReachabilitySwift'
+               BlueprintIdentifier = 'F49F4E637BD12451875145E3437825BA'
+               BlueprintName = 'HandyJSON'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'ReachabilitySwift.framework'>
+               BuildableName = 'HandyJSON.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

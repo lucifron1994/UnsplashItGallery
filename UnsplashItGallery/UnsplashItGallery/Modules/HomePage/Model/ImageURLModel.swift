@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import HandyJSON
 
-class ImageURLModel: NSObject {
+class ImageURLModel: HandyJSON {
     var raw:String?
     var full:String?
     var regular:String?
     var small:String?
     var thumb:String?
     
-    
+    required init(){}
 }

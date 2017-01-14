@@ -7,8 +7,8 @@ pod 'Kingfisher'
 pod 'DGElasticPullToRefresh'
 pod 'ReachabilitySwift', '~> 3'
 pod 'Alamofire'
+pod 'HandyJSON'
 
 target 'UnsplashItGallery' do
 
 end
-

@@ -7,15 +7,18 @@
 //
 
 import UIKit
+import HandyJSON
 
-class ImageModel: NSObject {
+class ImageModel: HandyJSON {
     var id:String?
     var created_at:String?
     var width:Int?
     var height:Int?
     var urls:ImageURLModel?
     
+    required init(){}
 }
+
 
 /* Get At 17-1-14
  {

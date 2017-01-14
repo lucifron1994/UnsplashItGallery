@@ -62,7 +62,7 @@ class PhotoBrowserController: UIViewController, UICollectionViewDataSource{
         tempView.isHidden = false
         downloadProgressView.progress = 0.0
         
-        let imageModel =  imagesList![getCurrentIndex().item]
+//        let imageModel =  imagesList![getCurrentIndex().item]
         
 //        let url// = URL(string: "https://unsplash.it/\(imageModel.width)/\(imageModel.height)?image=\(imageModel.imageId)")
         
@@ -150,7 +150,7 @@ extension PhotoBrowserController{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCellID, for: indexPath as IndexPath) as! PhotoBrowserCell
         //        print("Before \(cell.progressView.progress)")
         
-        let imageModel =  imagesList![indexPath.row]
+//        let imageModel =  imagesList![indexPath.row]
 
 //        let url = URL(string:"https://unsplash.it/\(kHeight*2)/\(kWidth*2)?image=\(imageModel.imageId)")
 //        cell.tempImageURL = URL(string:"https://unsplash.it/\(kRootViewImageWidth)/\(kRootViewImageHeight)?image=\(imageModel.imageId)")

@@ -14,7 +14,7 @@
 		3EA553F41C341A3000AC00D5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EA553F21C341A3000AC00D5 /* LaunchScreen.storyboard */; };
 		3EB65E141E29FB7B00BD47D3 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB65E041E29FB7B00BD47D3 /* InfoViewController.swift */; };
 		3EB65E151E29FB7B00BD47D3 /* RootNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB65E051E29FB7B00BD47D3 /* RootNavigationController.swift */; };
-		3EB65E161E29FB7B00BD47D3 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB65E061E29FB7B00BD47D3 /* RootViewController.swift */; };
+		3EB65E161E29FB7B00BD47D3 /* HomepageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB65E061E29FB7B00BD47D3 /* HomepageViewController.swift */; };
 		3EB65E171E29FB7B00BD47D3 /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB65E081E29FB7B00BD47D3 /* ImageModel.swift */; };
 		3EB65E181E29FB7B00BD47D3 /* ImageURLModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB65E091E29FB7B00BD47D3 /* ImageURLModel.swift */; };
 		3EB65E191E29FB7B00BD47D3 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB65E0B1E29FB7B00BD47D3 /* MainTableViewCell.swift */; };
@@ -63,7 +63,7 @@
 		3EA553F51C341A3000AC00D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3EB65E041E29FB7B00BD47D3 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		3EB65E051E29FB7B00BD47D3 /* RootNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootNavigationController.swift; sourceTree = "<group>"; };
-		3EB65E061E29FB7B00BD47D3 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		3EB65E061E29FB7B00BD47D3 /* HomepageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomepageViewController.swift; sourceTree = "<group>"; };
 		3EB65E081E29FB7B00BD47D3 /* ImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
 		3EB65E091E29FB7B00BD47D3 /* ImageURLModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageURLModel.swift; sourceTree = "<group>"; };
 		3EB65E0B1E29FB7B00BD47D3 /* MainTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
@@ -161,9 +161,9 @@
 		3EB65E031E29FB7B00BD47D3 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				3EB65E061E29FB7B00BD47D3 /* HomepageViewController.swift */,
 				3EB65E041E29FB7B00BD47D3 /* InfoViewController.swift */,
 				3EB65E051E29FB7B00BD47D3 /* RootNavigationController.swift */,
-				3EB65E061E29FB7B00BD47D3 /* RootViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -352,7 +352,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		CCEB852F632C24A8A60A3A10 /* [CP] Embed Pods Frameworks */ = {
@@ -380,7 +380,7 @@
 				3EB65E181E29FB7B00BD47D3 /* ImageURLModel.swift in Sources */,
 				3EA553EA1C341A3000AC00D5 /* AppDelegate.swift in Sources */,
 				3EB65E191E29FB7B00BD47D3 /* MainTableViewCell.swift in Sources */,
-				3EB65E161E29FB7B00BD47D3 /* RootViewController.swift in Sources */,
+				3EB65E161E29FB7B00BD47D3 /* HomepageViewController.swift in Sources */,
 				3EB65E1C1E29FB7B00BD47D3 /* PhotoBrowserCell.swift in Sources */,
 				3EB65E1A1E29FB7B00BD47D3 /* PhotoBrowserController.swift in Sources */,
 				3EB65E141E29FB7B00BD47D3 /* InfoViewController.swift in Sources */,
