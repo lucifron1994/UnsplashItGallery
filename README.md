@@ -1,8 +1,7 @@
 # UnsplashItGallery
 Unsplash Gallery
-一款已上架App Store摄影作品库，由Unsplash提供数据，并且照片可以随意使用。
 
-App Store Link https://itunes.apple.com/us/app/unsplash-gallery/id1071715146?l=zh&ls=1&mt=8
+摄影图库，由Unsplash提供数据
 
 Screen shots
 

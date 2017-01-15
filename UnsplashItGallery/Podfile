@@ -8,6 +8,7 @@ pod 'DGElasticPullToRefresh'
 pod 'ReachabilitySwift', '~> 3'
 pod 'Alamofire'
 pod 'HandyJSON'
+pod 'SnapKit', '~> 3'
 
 target 'UnsplashItGallery' do
 

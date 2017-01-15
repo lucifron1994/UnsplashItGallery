@@ -44,6 +44,17 @@ class HomepageViewController: UIViewController,UITableViewDelegate,UITableViewDa
         tableView.separatorStyle = .none
         tableView.rowHeight = kWidth/16.0*9.0
         
+        //TableFooter
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: 375, height: 35))
+        footerView.backgroundColor = UIColor.orange
+        //Footer indeicator
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        indicator.tintColor = UIColor.gray
+        footerView.addSubview(indicator)
+        indicator.frame = CGRect(x: 100, y: 10, width: 30, height: 30)
+        tableView.tableFooterView = footerView
+
+        
         //Add pullToRefresh
         let loadingView = DGElasticPullToRefreshLoadingViewCircle()
         loadingView.tintColor = UIColor.white
@@ -81,41 +92,18 @@ class HomepageViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
     }
     
-    //结合JSON数据刷新UI
-//    func updateJSONData(){
-//        if self.jsonArray?.count != 0{
-//            self.imagesList = [ImageModel]()
-//            
-//            let frontIndex = (self.jsonArray?.count)! - 1
-//            let backIndex = ((self.jsonArray?.count)! - self.pageImagesCount)
-//            
-//            for i in (backIndex...frontIndex).reversed() {
-//                print(i)
-//                    let model = ImageModel()
-//                    model.imageId = self.jsonArray![i]["id"] as? Int
-//                    model.width = self.jsonArray![i]["width"] as? Int
-//                    model.height = self.jsonArray![i]["height"] as? Int
-//                    self.imagesList?.append(model)
-//            }
-//
-//            self.numberOfPage = 1
-//            self.tableView.reloadData()
-//        }
-//    }
-    
-    
     //MARK: - Pull Up Refresh - add Old Data
     // 
     //  为footer增加旋转加载，。
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if scrollView.contentOffset.y + scrollView.frame.size.height - kPullUpOffset > scrollView.contentSize.height{
-            viewModel.getMoreData(completion: { (succeed) in
-                if succeed {
-                    self.tableView.reloadData()
-                }
-            })
-            
-        }
+//        if scrollView.contentOffset.y + scrollView.frame.size.height - kPullUpOffset > scrollView.contentSize.height{
+//            viewModel.getMoreData(completion: { (succeed) in
+//                if succeed {
+//                    self.tableView.reloadData()
+//                }
+//            })
+//            
+//        }
     }
     
     //MARK: - Action
