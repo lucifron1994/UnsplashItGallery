@@ -79,5 +79,26 @@ class HomepageViewModel: NSObject {
             
         }
     }
+    
+    func getRandomPhoto(completion:@escaping (_ succeed:Bool,_ imageModel:ImageModel?)->()){
+        let url = BaseURL + GETRandomPhotoURL
+        let parameters = ["client_id" : ApplicationID]
+        
+        print("加载随机图片 \(url)")
+        
+        Alamofire.request(url, parameters:parameters).responseJSON { response in
+            if let JSON : Dictionary<String, AnyObject> = response.result.value as! Dictionary? {
+                
+                print("Get Random : \(JSON)")
+                let model : ImageModel = JSONDeserializer.deserializeFrom(dict: JSON as NSDictionary?)!
+                completion(true, model)
+                
+            }else{
+                completion(false, nil)
+            }
+            
+        }
+        
+    }
 
 }

@@ -16,7 +16,7 @@ let AppSecret = "4323007b8d7e8af2e711c39da7e9457380677f5efa455217d95c34a2395a7f5
 let BaseURL = "https://api.unsplash.com/"
 // Get a single page from the list of all photos.
 let GETPhotosURL = "photos"
-
+let GETRandomPhotoURL = "photos/random"
 
 let kWidth = UIScreen.main.bounds.size.width
 let kHeight = UIScreen.main.bounds.size.height

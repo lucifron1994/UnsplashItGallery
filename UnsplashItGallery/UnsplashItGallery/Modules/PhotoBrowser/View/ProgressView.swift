@@ -18,6 +18,7 @@ class ProgressView: UIView {
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
+//        print("Drawing \(progress)")
         
         // 1.获取参数
         let center = CGPoint(x: rect.width * 0.5, y: rect.height * 0.5)

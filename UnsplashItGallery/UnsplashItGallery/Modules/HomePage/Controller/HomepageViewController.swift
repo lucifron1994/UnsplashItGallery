@@ -115,22 +115,17 @@ class HomepageViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     //MARK: - Action
-    
-//    @IBAction func getRandomImage(_ sender: AnyObject) {
-//        if self.jsonArray != nil {
-//            let random: UInt32 = UInt32((self.jsonArray?.count)!)
-//            let randomIndex = Int(arc4random_uniform(random))
-//            let indexPath = NSIndexPath(row: randomIndex, section: 0)
-//
-//            let sb = UIStoryboard(name: "Main", bundle: nil)
-//            let detailVC = sb.instantiateViewController(withIdentifier: "photoBrowser") as! PhotoBrowserController
-//            detailVC.currentIndexPath = indexPath
-//            detailVC.imagesList  = imagesList;
-//            detailVC.modalTransitionStyle = .crossDissolve
-//            present(detailVC, animated: true, completion: nil)
-//
-//        }
-//    }
+    @IBAction func getRandomImage(_ sender: AnyObject) {
+        viewModel.getRandomPhoto { (succeed, imageModel) in
+            if succeed {
+                let sb = UIStoryboard(name: "Main", bundle: nil)
+                let detailVC = sb.instantiateViewController(withIdentifier: "photoBrowser") as! PhotoBrowserController
+                detailVC.modalTransitionStyle = .crossDissolve
+                detailVC.imagesList = [imageModel!]
+                detailVC.currentIndexPath = NSIndexPath(item: 0, section: 0)
+                self.present(detailVC, animated: true, completion: nil)}
+        }
+    }
     
     //MARK: - TableView Delegate
     
@@ -162,7 +157,7 @@ class HomepageViewController: UIViewController,UITableViewDelegate,UITableViewDa
         if segue.identifier == kToPhotoBrowserSegue {
             let detail = segue.destination as! PhotoBrowserController
             detail.currentIndexPath = sender as? NSIndexPath
-//            detail.imagesList = imagesList
+            detail.imagesList = viewModel.imagesList
         }
     }
     
