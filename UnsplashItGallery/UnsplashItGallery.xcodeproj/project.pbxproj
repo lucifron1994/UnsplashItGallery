@@ -297,6 +297,7 @@
 				TargetAttributes = {
 					3EA553E51C341A3000AC00D5 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = U5A65PSL5B;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
@@ -548,7 +549,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = U5A65PSL5B;
 				INFOPLIST_FILE = UnsplashItGallery/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wanghong.UnsplashItGallery;
@@ -570,7 +571,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Hong Wang (CEGJ2N879K)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = U5A65PSL5B;
 				INFOPLIST_FILE = UnsplashItGallery/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wanghong.UnsplashItGallery;

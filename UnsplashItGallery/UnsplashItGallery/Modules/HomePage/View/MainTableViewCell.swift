@@ -16,7 +16,7 @@ class MainTableViewCell: UITableViewCell {
     func setImageDataSource(_ model: ImageModel){
         
         cellImageView.kf.indicatorType = .activity
-        self.cellImageView.kf.setImage(with: URL(string: (model.urls?.small)!))
+        self.cellImageView.kf.setImage(with: URL(string: (model.urls?.regular)!))
     }
     
 }

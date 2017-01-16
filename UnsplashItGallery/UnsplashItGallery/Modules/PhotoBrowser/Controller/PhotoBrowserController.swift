@@ -68,25 +68,19 @@ class PhotoBrowserController: UIViewController, UICollectionViewDataSource{
         let downloader = ImageDownloader(name: "downloader")
     
         downloader.downloadImage(with: URL(string:(currentModel?.urls?.full)!)!, options: nil, progressBlock: { (receivedSize, totalSize) in
-            DispatchQueue.main.async {
-                self.downloadProgressView.progress = CGFloat(receivedSize) / CGFloat(totalSize)
-            }
+            
+            self.downloadProgressView.progress = CGFloat(receivedSize) / CGFloat(totalSize)
             
             }) {(image, error, imageURL, originalData) in
                 
-                DispatchQueue.main.async {
-                    self.tempView.isHidden = true
-                }
-                
-                
+                self.tempView.isHidden = true
+
                 if error != nil {
                     ShowAlert.showAlert(NSLocalizedString("error", comment: ""), controller: self)
                 }else{
                     if image != nil {
                         UIImageWriteToSavedPhotosAlbum(image!, self, #selector(PhotoBrowserController.image(_:didFinishSavingWithError:contextInfo:)), nil)
-                        DispatchQueue.main.async {
-                        
-                            let cell = self.mainCollectionView.cellForItem(at: self.getCurrentIndex() as IndexPath) as! PhotoBrowserCell
+                        if let cell = self.mainCollectionView.cellForItem(at: self.getCurrentIndex()) as? PhotoBrowserCell{
                             cell.imageView_full.image = image
                         }
                     }
@@ -155,10 +149,10 @@ extension PhotoBrowserController{
 }
 
 extension PhotoBrowserController{
-    fileprivate  func getCurrentIndex()-> NSIndexPath {
+    fileprivate  func getCurrentIndex()-> IndexPath {
         let index : Int = Int(mainCollectionView.contentOffset.x / self.view.frame.size.width)
         
-        return NSIndexPath(row: index, section: 0)
+        return IndexPath(row: index, section: 0)
     }
     
     

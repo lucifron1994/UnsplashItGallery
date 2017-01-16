@@ -26,7 +26,7 @@ class PhotoBrowserCell: UICollectionViewCell {
             self.progressView.isHidden = false
             self.progressView.progress = 0.0
             
-            imageView_full.kf.setImage(with:URL(string: (imageModel?.urls?.small)!), placeholder: nil, options: nil, progressBlock: { (receivedSize, totalSize) in
+            imageView_full.kf.setImage(with:URL(string: (imageModel?.urls?.regular)!), placeholder: nil, options: nil, progressBlock: { (receivedSize, totalSize) in
                 
                 let value:CGFloat = CGFloat(receivedSize) / CGFloat(totalSize)
             
@@ -37,10 +37,6 @@ class PhotoBrowserCell: UICollectionViewCell {
             }) { (image, error, cacheType, imageURL) in
                 
                 self.progressView.isHidden = true
-            
-                //                if (error != nil && image == nil) {
-                //                    self.imageView_full.kf.setImage(with: self.tempImageURL!)
-                //                }
             }
             
         }
