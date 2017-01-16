@@ -17,6 +17,20 @@ class HomepageViewModel: NSObject {
     
     var imagesList:[ImageModel] = [ImageModel]()
     
+    let dbHelper = DataBaseHelper.shareHelper
+    
+    
+    /// 初始数据库
+    func initDatabase(){
+        dbHelper.createDatabase()
+        dbHelper.createHomepageTable()
+        
+        //读取数据
+        dbHelper.getDataBaseData { (models) in
+            imagesList = models
+        }
+    }
+    
     /// 拉取首页数据
     func getLatestData( completion:@escaping (_ succeed:Bool)->() ){
         
@@ -35,6 +49,7 @@ class HomepageViewModel: NSObject {
                     let model : ImageModel = JSONDeserializer.deserializeFrom(dict: imageURL as? NSDictionary)!
                     self.imagesList.append(model)
                 }
+                self.dbHelper.insertItems(models: self.imagesList)
                 
                 completion(true)
             }else{

@@ -9,7 +9,7 @@ pod 'ReachabilitySwift', '~> 3'
 pod 'Alamofire'
 pod 'HandyJSON'
 pod 'SnapKit', '~> 3'
-
+pod 'FMDB'
 target 'UnsplashItGallery' do
 
 end

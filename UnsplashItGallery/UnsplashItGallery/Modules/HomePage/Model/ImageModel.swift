@@ -12,8 +12,6 @@ import HandyJSON
 class ImageModel: HandyJSON {
     var id:String?
     var created_at:String?
-    var width:Int?
-    var height:Int?
     var urls:ImageURLModel?
     
     required init(){}

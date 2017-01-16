@@ -1,6 +1,9 @@
 PODS:
   - Alamofire (4.1.0)
   - DGElasticPullToRefresh (1.1)
+  - FMDB (2.6.2):
+    - FMDB/standard (= 2.6.2)
+  - FMDB/standard (2.6.2)
   - HandyJSON (1.4.0)
   - Kingfisher (3.2.1)
   - ReachabilitySwift (3)
@@ -9,6 +12,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - DGElasticPullToRefresh
+  - FMDB
   - HandyJSON
   - Kingfisher
   - ReachabilitySwift (~> 3)
@@ -17,11 +21,12 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   Alamofire: e266cf991b933498df791e645e0d8ac294492153
   DGElasticPullToRefresh: 28f11a6026302a90f8ffebbc6e24748e584dddd3
+  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   HandyJSON: 8aa98b0ece8c5f7a9042bccd33b0254448704bcb
   Kingfisher: 64ef28c6d3d6f344e3ae2d7f5c9da80439505d99
   ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
   SnapKit: 12b24f569cb7c143acc9c22b9d91b23e7b1c84a2
 
-PODFILE CHECKSUM: 754ba73acb4fab48c9bc9d7a1a898f486ecd0753
+PODFILE CHECKSUM: fe0f687ab78bccdb17b38f671d80e080dd834fef
 
 COCOAPODS: 1.1.1

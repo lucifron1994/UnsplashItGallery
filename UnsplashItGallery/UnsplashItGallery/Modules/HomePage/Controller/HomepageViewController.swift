@@ -11,6 +11,7 @@ import DGElasticPullToRefresh
 import ReachabilitySwift
 import SnapKit
 
+
 private let kToPhotoBrowserSegue = "photoBrowserSegue"
 private let kCellID = "imageCell"
 
@@ -26,18 +27,15 @@ class HomepageViewController: UIViewController,UITableViewDelegate,UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       
-       setUI()
-        //检查JSON有的话先用旧的并刷新
-//        if  DataStorageTool.fileExist() {
-//            self.jsonArray = DataStorageTool.getJsonData()
-//            updateJSONData()s
-//        }
-        //获得最新json数据
+        setUI()
+        
+        viewModel.initDatabase()
+        
         getLatestData()
         
         //检测网络
         checkNetConnection()
+        
     }
     
     private func setUI(){

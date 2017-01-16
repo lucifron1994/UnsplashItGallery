@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>FMDB.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>HandyJSON.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -42,12 +47,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>219E6EF476EF85467F85AAF7F0C3F0A9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>251BAD17812F7EBF6532EACF66F941C3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>39F7A625E6F8FD1434868D11271FDDFB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>47D07B436D82BB983C8429FF84F919A3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5465934E3E56B78FE4FECE4D3405BCA3</key>
+		<key>4C18EC6D4A2102B7B0E4435C53834952</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -57,17 +77,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C3C2CDECE4D3272AACF5E87F43DC5C14</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>C4944FEC314D1A66588651D006273ADE</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F2E7A5F99BE1661FF178C337CC54A786</key>
 		<dict>
 			<key>primary</key>
 			<true/>
