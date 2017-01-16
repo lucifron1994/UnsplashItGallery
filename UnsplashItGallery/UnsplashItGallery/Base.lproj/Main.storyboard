@@ -256,6 +256,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="randomItem" destination="xbj-x0-28o" id="XQs-Av-vhe"/>
                         <outlet property="tableView" destination="b21-Gd-xj4" id="oel-re-0jL"/>
                         <segue destination="jzi-wq-McZ" kind="presentation" identifier="photoBrowserSegue" modalTransitionStyle="crossDissolve" id="aQm-UY-YWQ"/>
                     </connections>

@@ -24,6 +24,9 @@ class HomepageViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     var isGettingMoreData = false
     
+    @IBOutlet var randomItem: UIBarButtonItem!
+    var loadingItem: UIBarButtonItem?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -65,6 +68,19 @@ class HomepageViewController: UIViewController,UITableViewDelegate,UITableViewDa
             }, loadingView: loadingView)
         tableView.dg_setPullToRefreshBackgroundColor(UIColor.white)
         tableView.dg_setPullToRefreshFillColor(UIColor.black)
+        
+        
+        //Loading Random Image
+        let loadingItemView = UIView(frame: CGRect(x: 5, y: 0, width: 36, height: 36))
+        loadingItemView.backgroundColor = UIColor.clear
+        let randomIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+        randomIndicator.startAnimating()
+        loadingItemView.addSubview(randomIndicator)
+        randomIndicator.snp.makeConstraints { (make) in
+            make.center.equalTo(loadingItemView.center)
+        }
+        loadingItem = UIBarButtonItem(customView: loadingItemView)
+        
     }
 
     func checkNetConnection(){
@@ -115,14 +131,21 @@ class HomepageViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     //MARK: - Action
     @IBAction func getRandomImage(_ sender: AnyObject) {
+        
+        navigationItem.rightBarButtonItem = loadingItem
+        
         viewModel.getRandomPhoto { (succeed, imageModel) in
+            
+            self.navigationItem.rightBarButtonItem = self.randomItem
+            
             if succeed {
                 let sb = UIStoryboard(name: "Main", bundle: nil)
                 let detailVC = sb.instantiateViewController(withIdentifier: "photoBrowser") as! PhotoBrowserController
                 detailVC.modalTransitionStyle = .crossDissolve
                 detailVC.imagesList = [imageModel!]
                 detailVC.currentIndexPath = NSIndexPath(item: 0, section: 0)
-                self.present(detailVC, animated: true, completion: nil)}
+                self.present(detailVC, animated: true, completion: nil)
+            }
         }
     }
     
