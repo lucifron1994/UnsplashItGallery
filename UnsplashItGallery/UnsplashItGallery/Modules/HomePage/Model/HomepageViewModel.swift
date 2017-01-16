@@ -13,7 +13,7 @@ import HandyJSON
 class HomepageViewModel: NSObject {
     
     fileprivate var currentPage = 1
-    fileprivate var numPerPage = 20
+    fileprivate var numPerPage = 10
     
     var imagesList:[ImageModel] = [ImageModel]()
     
@@ -50,7 +50,8 @@ class HomepageViewModel: NSObject {
     func getMoreData( completion:@escaping (_ succeed:Bool)->() ){
     
         let url = BaseURL + GETPhotosURL
-        
+        print("加载更多数据 \(url)")
+
         currentPage = currentPage + 1
         let parameters = ["client_id" : ApplicationID,
                           "page" : self.currentPage,
@@ -58,6 +59,7 @@ class HomepageViewModel: NSObject {
         
         Alamofire.request(url, parameters:parameters).responseJSON { response in
             if let JSON : [AnyObject] = response.result.value as? [AnyObject]{
+                print("Get More Data : \(JSON)")
                 
                 if JSON.count > 0 {
                     for imageURL in JSON{
