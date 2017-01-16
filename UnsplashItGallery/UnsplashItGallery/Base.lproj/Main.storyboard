@@ -22,11 +22,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lpq-75-JVL">
-                                <rect key="frame" x="46" y="120" width="508" height="360"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lpq-75-JVL">
+                                <rect key="frame" x="16" y="233.5" width="343" height="200"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtf-7G-F34">
-                                        <rect key="frame" x="140" y="283" width="228" height="49"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtf-7G-F34">
+                                        <rect key="frame" x="57.5" y="139" width="228" height="46"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="228" id="8md-Mg-P9g"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="228" id="ReK-0x-WaN"/>
@@ -60,8 +60,8 @@
                                             <action selector="clearCache:" destination="4ou-GW-JAe" eventType="touchUpInside" id="lHx-No-w6M"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qtb-DS-rp1">
-                                        <rect key="frame" x="20" y="41" width="469" height="143"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qtb-DS-rp1">
+                                        <rect key="frame" x="5" y="10" width="333" height="129"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="143" id="kLK-61-r60"/>
                                         </constraints>
@@ -196,19 +196,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="205" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="b21-Gd-xj4">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="205" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="b21-Gd-xj4">
+                                <rect key="frame" x="-4" y="0.0" width="383" height="667"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="imageCell" rowHeight="205" id="dL6-Ve-7oE" customClass="MainTableViewCell" customModule="UnsplashItGallery" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="205"/>
+                                        <rect key="frame" x="0.0" y="28" width="383" height="205"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dL6-Ve-7oE" id="wE9-KG-6lN">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="204"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="204"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hZy-AS-DXe">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="204"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="383" height="204"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -278,8 +278,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" layoutMarginsFollowReadableWidth="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="X74-ld-51I">
-                                <rect key="frame" x="0.0" y="0.0" width="620" height="600"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="X74-ld-51I">
+                                <rect key="frame" x="0.0" y="0.0" width="395" height="667"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                                 <collectionViewLayout key="collectionViewLayout" id="AV1-Ip-YXj" customClass="ImageCollectionViewLayout" customModule="UnsplashItGallery" customModuleProvider="target"/>
@@ -289,12 +289,12 @@
                                     <outlet property="delegate" destination="jzi-wq-McZ" id="LbZ-bo-LWi"/>
                                 </connections>
                             </collectionView>
-                            <view hidden="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yeg-to-x6p">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yeg-to-x6p">
+                                <rect key="frame" x="-4" y="0.0" width="383" height="667"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vI9-vg-Knv" customClass="ProgressView" customModule="UnsplashItGallery" customModuleProvider="target">
-                                        <rect key="frame" x="275" y="275" width="50" height="50"/>
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vI9-vg-Knv" customClass="ProgressView" customModule="UnsplashItGallery" customModuleProvider="target">
+                                        <rect key="frame" x="166.5" y="308.5" width="50" height="50"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="3g6-Gp-Uxj"/>
                                             <constraint firstAttribute="height" constant="50" id="kWU-Xh-u6k"/>
@@ -307,8 +307,8 @@
                                     <constraint firstItem="vI9-vg-Knv" firstAttribute="centerY" secondItem="yeg-to-x6p" secondAttribute="centerY" id="slU-pj-DDk"/>
                                 </constraints>
                             </view>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="edn-HL-cvb">
-                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="edn-HL-cvb">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <items>
                                     <barButtonItem systemItem="action" id="SvF-ag-PAB">
                                         <connections>

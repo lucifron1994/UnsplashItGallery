@@ -145,14 +145,9 @@ extension PhotoBrowserController{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCellID, for: indexPath as IndexPath) as! PhotoBrowserCell
-        //        print("Before \(cell.progressView.progress)")
         
         let imageModel =  imagesList![indexPath.row]
-        
-        //        cell.tempImageURL = URL(string:"https://unsplash.it/\(kRootViewImageWidth)/\(kRootViewImageHeight)?image=\(imageModel.imageId)")
         cell.imageModel = imageModel
-        
-        print("self \(view.frame.size.width) coll \(collectionView.frame.size.width) image:\(cell.imageView_full.frame.width)");
         
         return cell
     }

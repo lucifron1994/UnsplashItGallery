@@ -10,7 +10,7 @@ import UIKit
 
 class ProgressView: UIView {
     
-    var progress : CGFloat = 0 {
+    var progress : CGFloat = 0.0{
         didSet {
             setNeedsDisplay()
         }
@@ -18,7 +18,6 @@ class ProgressView: UIView {
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-//        print("Drawing \(progress)")
         
         // 1.获取参数
         let center = CGPoint(x: rect.width * 0.5, y: rect.height * 0.5)
@@ -39,14 +38,16 @@ class ProgressView: UIView {
         let path = UIBezierPath(arcCenter: center, radius: r, startAngle: start, endAngle: end, clockwise: true)
         path.addLine(to: center)
         path.close()
-        UIColor(white: 1.0, alpha: 0.5).setFill()
+        UIColor(white: 1.0, alpha: 0.6).setFill()
         path.fill()
+        
         
         // 3.画出边线
         let rEdge = min(rect.width, rect.height) * 0.5 - 2
         let endEdge = start + 2 * CGFloat(M_PI)
         let pathEdge = UIBezierPath(arcCenter: center, radius: rEdge, startAngle: start, endAngle: endEdge, clockwise: true)
-        UIColor(white: 1.0, alpha: 0.5).setStroke()
+        UIColor(white: 1.0, alpha: 0.6).setStroke()
         pathEdge.stroke()
+        
     }
 }

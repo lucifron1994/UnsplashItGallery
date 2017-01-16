@@ -82,8 +82,9 @@
                             <outlet property="delegate" destination="gTV-IL-0wX" id="epS-cT-bft"/>
                         </connections>
                     </scrollView>
-                    <view hidden="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="1lq-uj-oZF" customClass="ProgressView" customModule="UnsplashItGallery" customModuleProvider="target">
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1lq-uj-oZF" customClass="ProgressView" customModule="UnsplashItGallery" customModuleProvider="target">
                         <rect key="frame" x="162.5" y="258.5" width="50" height="50"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="50" id="gJj-HR-pNo"/>
                             <constraint firstAttribute="width" constant="50" id="m2y-mq-Tep"/>

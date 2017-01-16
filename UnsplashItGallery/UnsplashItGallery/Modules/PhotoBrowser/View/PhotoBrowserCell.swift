@@ -23,27 +23,27 @@ class PhotoBrowserCell: UICollectionViewCell {
     var imageModel : ImageModel? {
         didSet {
             
-            self.progressView.progress = 0
             self.progressView.isHidden = false
             
-            imageView_full.kf.setImage(with:URL(string: (imageModel?.urls?.regular)!), placeholder: nil, options: nil, progressBlock: { (receivedSize, totalSize) in
-                DispatchQueue.main.async {
-                    let value:CGFloat = CGFloat(receivedSize) / CGFloat(totalSize)
-                        
-                    print("\(receivedSize) \(totalSize) \(value)")
-                    self.progressView.progress = CGFloat(receivedSize) / CGFloat(totalSize)
+            imageView_full.kf.setImage(with:URL(string: (imageModel?.urls?.small)!), placeholder: nil, options: nil, progressBlock: { (receivedSize, totalSize) in
+                
+                let value:CGFloat = CGFloat(receivedSize) / CGFloat(totalSize)
+            
+                if value > self.progressView.progress {
+                    self.progressView.progress = value
                 }
+                
             }) { (image, error, cacheType, imageURL) in
-                DispatchQueue.main.async {
-                    self.progressView.isHidden = true
-                }
-//                if (error != nil && image == nil) {
-//                    self.imageView_full.kf.setImage(with: self.tempImageURL!)
-//                }
+                
+                self.progressView.isHidden = true
+            
+                //                if (error != nil && image == nil) {
+                //                    self.imageView_full.kf.setImage(with: self.tempImageURL!)
+                //                }
             }
             
         }
-
+        
     }
     
     override func awakeFromNib() {
@@ -53,6 +53,7 @@ class PhotoBrowserCell: UICollectionViewCell {
 }
 
 extension PhotoBrowserCell : UIScrollViewDelegate {
+    
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView_full
     }
