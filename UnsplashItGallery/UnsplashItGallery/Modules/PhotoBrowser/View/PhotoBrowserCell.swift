@@ -24,6 +24,7 @@ class PhotoBrowserCell: UICollectionViewCell {
         didSet {
             
             self.progressView.isHidden = false
+            self.progressView.progress = 0.0
             
             imageView_full.kf.setImage(with:URL(string: (imageModel?.urls?.small)!), placeholder: nil, options: nil, progressBlock: { (receivedSize, totalSize) in
                 
