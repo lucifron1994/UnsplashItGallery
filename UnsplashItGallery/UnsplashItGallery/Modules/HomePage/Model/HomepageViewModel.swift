@@ -49,6 +49,8 @@ class HomepageViewModel: NSObject {
                     let model : ImageModel = JSONDeserializer.deserializeFrom(dict: imageURL as? NSDictionary)!
                     self.imagesList.append(model)
                 }
+                
+                self.dbHelper.deleteHomepageTable()
                 self.dbHelper.insertItems(models: self.imagesList)
                 
                 completion(true)
@@ -80,7 +82,10 @@ class HomepageViewModel: NSObject {
                     for imageURL in JSON{
                         let model : ImageModel = JSONDeserializer.deserializeFrom(dict: imageURL as? NSDictionary)!
                         self.imagesList.append(model)
+                        
+                        self.dbHelper .insertItem(model: model)
                     }
+                    
                     completion(true)
                 }else{
                     self.currentPage = self.currentPage-1

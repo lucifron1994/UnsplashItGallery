@@ -38,6 +38,7 @@ class DataBaseHelper: NSObject {
             return
         }
     }
+
     
     func createHomepageTable(){
         let sql = "create table if not exists \(tableName)(id integer PRIMARY KEY AUTOINCREMENT, imageId text,created_at text, thumb text, small text, regular text, full text, raw text);"
@@ -48,6 +49,17 @@ class DataBaseHelper: NSObject {
             print("创建表失败")
         }
         
+    }
+    
+    func deleteHomepageTable(){
+        let sql = "drop table if exists \(tableName);"
+        do {
+            try database?.executeUpdate(sql, values: nil)
+        } catch {
+            print("删除表失败")
+        }
+        
+        createHomepageTable()
     }
     
     func insertItem(model : ImageModel){

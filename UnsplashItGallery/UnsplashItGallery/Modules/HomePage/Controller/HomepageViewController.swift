@@ -29,13 +29,14 @@ class HomepageViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         setUI()
         
+        //初始化数据库数据
         viewModel.initDatabase()
         
+        //请求第一页数据
         getLatestData()
         
         //检测网络
         checkNetConnection()
-        
     }
     
     private func setUI(){
