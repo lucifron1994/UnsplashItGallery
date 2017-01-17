@@ -12,12 +12,9 @@ import Kingfisher
 
 class PhotoBrowserCell: UICollectionViewCell {
     
-    
     @IBOutlet weak var imageView_full: UIImageView!
-    
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
-
     @IBOutlet weak var progressView: ProgressView!
     
     var imageModel : ImageModel? {

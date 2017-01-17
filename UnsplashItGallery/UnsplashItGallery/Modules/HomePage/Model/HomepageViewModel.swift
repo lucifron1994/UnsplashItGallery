@@ -12,13 +12,11 @@ import HandyJSON
 
 class HomepageViewModel: NSObject {
     
-    fileprivate var currentPage = 1
-    fileprivate var numPerPage = 10
+    private var currentPage = 1
+    private var numPerPage = 20
+    private let dbHelper = DataBaseHelper.shareHelper
     
     var imagesList:[ImageModel] = [ImageModel]()
-    
-    let dbHelper = DataBaseHelper.shareHelper
-    
     
     /// 初始数据库
     func initDatabase(){
@@ -44,14 +42,17 @@ class HomepageViewModel: NSObject {
         Alamofire.request(url, parameters:parameters).responseJSON { response in
             if let JSON : [AnyObject] = response.result.value as? [AnyObject]{
                 print("First Page：\(JSON)")
-                self.imagesList = [ImageModel]()
-                for imageURL in JSON{
-                    let model : ImageModel = JSONDeserializer.deserializeFrom(dict: imageURL as? NSDictionary)!
-                    self.imagesList.append(model)
-                }
                 
-                self.dbHelper.deleteHomepageTable()
-                self.dbHelper.insertItems(models: self.imagesList)
+                if JSON.count > 0 {
+                    self.imagesList = [ImageModel]()
+                    for imageURL in JSON{
+                        let model : ImageModel = JSONDeserializer.deserializeFrom(dict: imageURL as? NSDictionary)!
+                        self.imagesList.append(model)
+                    }
+                    
+                    self.dbHelper.deleteHomepageTable()
+                    self.dbHelper.insertItems(models: self.imagesList)
+                }
                 
                 completion(true)
             }else{
@@ -82,7 +83,6 @@ class HomepageViewModel: NSObject {
                     for imageURL in JSON{
                         let model : ImageModel = JSONDeserializer.deserializeFrom(dict: imageURL as? NSDictionary)!
                         self.imagesList.append(model)
-                        
                         self.dbHelper .insertItem(model: model)
                     }
                     

@@ -19,13 +19,12 @@ private let kCellID = "imageCell"
 class HomepageViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
     @IBOutlet weak var tableView: UITableView!
-    
-    let viewModel = HomepageViewModel()
-    
-    var isGettingMoreData = false
-    
     @IBOutlet var randomItem: UIBarButtonItem!
     var loadingItem: UIBarButtonItem?
+    
+    private let viewModel = HomepageViewModel()
+    private var isGettingMoreData = false
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,7 +82,7 @@ class HomepageViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     }
 
-    func checkNetConnection(){
+    private func checkNetConnection(){
         
        let reachability = Reachability.init()
         //判断连接状态

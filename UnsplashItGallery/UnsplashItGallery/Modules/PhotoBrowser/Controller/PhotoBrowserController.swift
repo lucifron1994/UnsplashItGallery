@@ -22,7 +22,6 @@ class PhotoBrowserController: UIViewController, UICollectionViewDataSource{
     @IBOutlet weak var layout: ImageCollectionViewLayout!
     @IBOutlet weak var toolBar: UIToolbar!
     
-    
     @IBOutlet weak var tempView: UIView!
     @IBOutlet weak var downloadProgressView: ProgressView!
     
@@ -149,6 +148,7 @@ extension PhotoBrowserController{
 }
 
 extension PhotoBrowserController{
+    
     fileprivate  func getCurrentIndex()-> IndexPath {
         let index : Int = Int(mainCollectionView.contentOffset.x / self.view.frame.size.width)
         
