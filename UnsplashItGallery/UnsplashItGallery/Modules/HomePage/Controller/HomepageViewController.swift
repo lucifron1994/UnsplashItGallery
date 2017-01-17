@@ -110,7 +110,7 @@ class HomepageViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     //MARK: - Pull Up Refresh
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        print("当前滚动位置 \(scrollView.contentOffset.y + scrollView.frame.size.height) \(scrollView.contentSize.height)")
+//        print("当前滚动位置 \(scrollView.contentOffset.y + scrollView.frame.size.height) \(scrollView.contentSize.height)")
 
         if scrollView.contentOffset.y + scrollView.frame.size.height >= scrollView.contentSize.height{
             if isGettingMoreData {

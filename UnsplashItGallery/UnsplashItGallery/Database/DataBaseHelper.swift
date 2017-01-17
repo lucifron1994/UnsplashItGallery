@@ -63,9 +63,12 @@ class DataBaseHelper: NSObject {
     }
     
     func insertItem(model : ImageModel){
+        if (model.id?.isEmpty)! || (model.created_at?.isEmpty)! {
+            return
+        }
         let sql = "insert into \(tableName) (imageId, created_at, thumb, small, regular, full, raw) values (?,?,?,?,?,?,?);"
         
-        let arg = [model.id,model.created_at, model.urls?.thumb, model.urls?.small, model.urls?.regular, model.urls?.full,model.urls?.raw]
+        let arg : [String] = [model.id!, model.created_at!, (model.urls?.thumb)!, (model.urls?.small)!, (model.urls?.regular)!, (model.urls?.full)!,(model.urls?.raw)!]
         if !((database?.executeUpdate(sql, withArgumentsIn: arg))!) {
             print("插入数据失败")
         }
