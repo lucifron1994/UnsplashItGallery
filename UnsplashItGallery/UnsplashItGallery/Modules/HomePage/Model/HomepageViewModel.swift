@@ -44,17 +44,30 @@ class HomepageViewModel: NSObject {
                 print("First Page：\(JSON)")
                 
                 if JSON.count > 0 {
-                    self.imagesList = [ImageModel]()
-                    for imageURL in JSON{
+                    
+                    var tempArray = [ImageModel]()
+                    for (index, imageURL) in JSON.enumerated() {
                         let model : ImageModel = JSONDeserializer.deserializeFrom(dict: imageURL as? NSDictionary)!
-                        self.imagesList.append(model)
+                        if index == 0 {
+                            if !self.shouldRefreshWith(latestModel: model){
+                                completion(false)
+                                print("无新数据不进行刷新")
+                                return
+                            }
+                        }
+                        tempArray.append(model)
                     }
                     
+                    self.imagesList = Array(tempArray)
+                
                     self.dbHelper.deleteHomepageTable()
                     self.dbHelper.insertItems(models: self.imagesList)
+                
+                    completion(true)
+                }else{
+                    completion(false)
                 }
                 
-                completion(true)
             }else{
                 completion(false)
             }
@@ -62,7 +75,6 @@ class HomepageViewModel: NSObject {
         }
         
     }
-    
     
     /// 拉取下一页数据
     func getMoreData( completion:@escaping (_ succeed:Bool)->() ){
@@ -120,5 +132,17 @@ class HomepageViewModel: NSObject {
         }
         
     }
+    
+    //MARK: - Helper
+    
+    private func shouldRefreshWith(latestModel : ImageModel) -> Bool {
+        if let oldModel = imagesList.first {
+            if latestModel.id == oldModel.id {
+                return false
+            }
+        }
+        return true
+    }
+    
 
 }
