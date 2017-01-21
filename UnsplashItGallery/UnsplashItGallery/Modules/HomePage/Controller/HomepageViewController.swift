@@ -99,9 +99,11 @@ class HomepageViewController: UIViewController,UITableViewDelegate,UITableViewDa
     //MARK: - Fetch Data
     private func getLatestData(){
         
-        viewModel.getLatestData { (succeed) in
+        viewModel.getLatestData { (succeed, needRefresh) in
             if succeed {
-                self.tableView.reloadData()
+                if needRefresh{
+                    self.tableView.reloadData()
+                }
             }else{
                 ShowAlert.showAlert(NSLocalizedString("failedToGetLatestData", comment: ""), controller: self)
             }

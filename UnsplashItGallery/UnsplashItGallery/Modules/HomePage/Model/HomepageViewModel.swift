@@ -30,7 +30,7 @@ class HomepageViewModel: NSObject {
     }
     
     /// 拉取首页数据
-    func getLatestData( completion:@escaping (_ succeed:Bool)->() ){
+    func getLatestData( completion:@escaping (_ succeed:Bool,_ shouldRefresh:Bool)->() ){
         
         let url = BaseURL + GETPhotosURL
         print("请求首页数据 \(url)")
@@ -50,7 +50,7 @@ class HomepageViewModel: NSObject {
                         let model : ImageModel = JSONDeserializer.deserializeFrom(dict: imageURL as? NSDictionary)!
                         if index == 0 {
                             if !self.shouldRefreshWith(latestModel: model){
-                                completion(false)
+                                completion(true, false)
                                 print("无新数据不进行刷新")
                                 return
                             }
@@ -63,13 +63,13 @@ class HomepageViewModel: NSObject {
                     self.dbHelper.deleteHomepageTable()
                     self.dbHelper.insertItems(models: self.imagesList)
                 
-                    completion(true)
+                    completion(true, true)
                 }else{
-                    completion(false)
+                    completion(false, false)
                 }
                 
             }else{
-                completion(false)
+                completion(false, false)
             }
             
         }
