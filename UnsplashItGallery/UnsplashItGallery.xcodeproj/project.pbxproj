@@ -29,6 +29,7 @@
 		3EB65E281E2A0BA100BD47D3 /* HomepageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB65E271E2A0BA100BD47D3 /* HomepageViewModel.swift */; };
 		3ECB43451C3918F800AB83CE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3ECB43471C3918F800AB83CE /* Localizable.strings */; };
 		3ECB43591C3AC52F00AB83CE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3ECB435B1C3AC52F00AB83CE /* InfoPlist.strings */; };
+		3EFE8B8B1E497520002B4937 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFE8B8A1E497520002B4937 /* FavoriteViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -83,6 +84,7 @@
 		3ECB435A1C3AC52F00AB83CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3ECB435C1C3AC53100AB83CE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		3ECB436C1C3B8A8B00AB83CE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		3EFE8B8A1E497520002B4937 /* FavoriteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		78728A2AC2B4467C0917BEA3 /* Pods_UnsplashItGallery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UnsplashItGallery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EC234B6C1552B241A75DEC8 /* Pods-UnsplashItGallery.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnsplashItGallery.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UnsplashItGallery/Pods-UnsplashItGallery.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -157,6 +159,7 @@
 			children = (
 				3EB65E021E29FB7B00BD47D3 /* HomePage */,
 				3EB65E0C1E29FB7B00BD47D3 /* PhotoBrowser */,
+				3EFE8B891E4974C4002B4937 /* Favorite */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -241,6 +244,14 @@
 				3EB65E251E29FBE400BD47D3 /* Constant.swift */,
 			);
 			path = Constant;
+			sourceTree = "<group>";
+		};
+		3EFE8B891E4974C4002B4937 /* Favorite */ = {
+			isa = PBXGroup;
+			children = (
+				3EFE8B8A1E497520002B4937 /* FavoriteViewController.swift */,
+			);
+			path = Favorite;
 			sourceTree = "<group>";
 		};
 		879FEBA8EDA6A06E47037B7C /* Pods */ = {
@@ -397,6 +408,7 @@
 				3EB65E161E29FB7B00BD47D3 /* HomepageViewController.swift in Sources */,
 				3E2ED3961E2CC2E300762BCE /* DataBaseHelper.swift in Sources */,
 				3EB65E1C1E29FB7B00BD47D3 /* PhotoBrowserCell.swift in Sources */,
+				3EFE8B8B1E497520002B4937 /* FavoriteViewController.swift in Sources */,
 				3EB65E1A1E29FB7B00BD47D3 /* PhotoBrowserController.swift in Sources */,
 				3EB65E141E29FB7B00BD47D3 /* InfoViewController.swift in Sources */,
 				3EB65E261E29FBE400BD47D3 /* Constant.swift in Sources */,

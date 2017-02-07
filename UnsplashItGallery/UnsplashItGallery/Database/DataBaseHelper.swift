@@ -9,7 +9,8 @@
 import UIKit
 import FMDB
 
-private let tableName = "homepage_table"
+private let tableName_homepage = "homepage_table"
+private let tableName_favorite = "favorite_table"
 
 class DataBaseHelper: NSObject {
     
@@ -23,7 +24,6 @@ class DataBaseHelper: NSObject {
     
     private override init(){}
 
-    
     
     func createDatabase(){
         
@@ -39,26 +39,13 @@ class DataBaseHelper: NSObject {
         }
     }
 
-    
+    //MARK: - homepage_table
     func createHomepageTable(){
-        let sql = "create table if not exists \(tableName)(id integer PRIMARY KEY AUTOINCREMENT, imageId text,created_at text, thumb text, small text, regular text, full text, raw text);"
-        
-        do {
-            try database?.executeUpdate(sql, values: nil)
-        } catch {
-            print("创建表失败")
-        }
-        
+        createTable(with: tableName_homepage)
     }
     
     func deleteHomepageTable(){
-        let sql = "drop table if exists \(tableName);"
-        do {
-            try database?.executeUpdate(sql, values: nil)
-        } catch {
-            print("删除表失败")
-        }
-        
+        deleteTable(with: tableName_homepage)
         createHomepageTable()
     }
     
@@ -66,11 +53,11 @@ class DataBaseHelper: NSObject {
         if (model.id?.isEmpty)! || (model.created_at?.isEmpty)! {
             return
         }
-        let sql = "insert into \(tableName) (imageId, created_at, thumb, small, regular, full, raw) values (?,?,?,?,?,?,?);"
+        let sql = "insert into \(tableName_homepage) (imageId, created_at, thumb, small, regular, full, raw) values (?,?,?,?,?,?,?);"
         
         let arg : [String] = [model.id!, model.created_at!, (model.urls?.thumb)!, (model.urls?.small)!, (model.urls?.regular)!, (model.urls?.full)!,(model.urls?.raw)!]
         if !((database?.executeUpdate(sql, withArgumentsIn: arg))!) {
-            print("插入数据失败")
+            print("插入数据失败 homepage_table")
         }
     }
     
@@ -82,7 +69,7 @@ class DataBaseHelper: NSObject {
     
     func getDataBaseData( completion : (_ images:[ImageModel])->()){
         
-        let sql = "select * from \(tableName);"
+        let sql = "select * from \(tableName_homepage);"
         if let rs = database?.executeQuery(sql, withArgumentsIn: nil) {
             var images:[ImageModel] = []
             while rs.next() {
@@ -102,5 +89,39 @@ class DataBaseHelper: NSObject {
             completion(images)
         }
     }
+    
+    //MARK: - homepage_table
+    func createFavoriteTable(){
+        createTable(with: tableName_favorite)
+    }
+    
+    func deleteFavoriteTable(){
+        deleteTable(with: tableName_favorite)
+        createFavoriteTable()
+    }
+    
+    //MARK: - Common
+    private func createTable(with tableName:String){
+        
+        let sql = "create table if not exists \(tableName)(id integer PRIMARY KEY AUTOINCREMENT, imageId text,created_at text, thumb text, small text, regular text, full text, raw text);"
+        do {
+            try database?.executeUpdate(sql, values: nil)
+        } catch {
+            print("创建表 \(tableName) 失败")
+        }
+    }
+    
+    
+    private func deleteTable(with tableName:String){
+        
+        let sql = "drop table if exists \(tableName);"
+        do {
+            try database?.executeUpdate(sql, values: nil)
+        } catch {
+            print("删除表 \(tableName) 失败")
+        }
+        
+    }
+    
     
 }
