@@ -256,7 +256,8 @@
                                     <action selector="getRandomImage:" destination="BYZ-38-t0r" id="jCn-gx-U3f"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem systemItem="camera" id="8ZU-JO-1X6">
+                            <barButtonItem image="favorite" id="8ZU-JO-1X6">
+                                <inset key="imageInsets" minX="20" minY="0.0" maxX="-20" maxY="0.0"/>
                                 <connections>
                                     <segue destination="1dO-NN-nA6" kind="show" id="IIl-jr-TaB"/>
                                 </connections>
@@ -285,9 +286,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5D9-fh-a2s">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="205" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5D9-fh-a2s">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="imageCell" rowHeight="205" id="b7s-6R-kXV" customClass="MainTableViewCell" customModule="UnsplashItGallery" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="205"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="b7s-6R-kXV" id="mNh-a5-08x">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="204"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZTd-wD-b7p">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="204"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="ZTd-wD-b7p" secondAttribute="trailing" constant="-8" id="Gyy-y2-cGE"/>
+                                                <constraint firstItem="ZTd-wD-b7p" firstAttribute="leading" secondItem="mNh-a5-08x" secondAttribute="leadingMargin" constant="-8" id="Q31-7z-7jK"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="ZTd-wD-b7p" secondAttribute="bottom" constant="-8" id="ivk-ny-2ni"/>
+                                                <constraint firstItem="ZTd-wD-b7p" firstAttribute="top" secondItem="mNh-a5-08x" secondAttribute="topMargin" constant="-8" id="s4x-Tm-Oog"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="cellImageView" destination="ZTd-wD-b7p" id="QVs-zf-rRT"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="1dO-NN-nA6" id="oLy-ZW-BpF"/>
                                     <outlet property="delegate" destination="1dO-NN-nA6" id="OTU-zc-s5g"/>
@@ -441,6 +466,7 @@
     </scenes>
     <resources>
         <image name="dice" width="22" height="22"/>
+        <image name="favorite" width="24" height="24"/>
         <image name="info" width="30" height="30"/>
     </resources>
 </document>

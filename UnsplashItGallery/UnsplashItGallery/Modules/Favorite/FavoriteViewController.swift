@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FavoriteViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class FavoriteViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var deleteBarItem: UIBarButtonItem!
@@ -31,6 +31,12 @@ class FavoriteViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     private func setUI(){
+        let backItem = UIBarButtonItem(image: UIImage.init(named: "nav_back"), style: .plain, target: self, action: #selector(self.popViewController))
+        self.navigationItem.leftBarButtonItem = backItem
+        backItem.imageInsets = UIEdgeInsetsMake(0, -15, 0, 15)
+        
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
         tableView.separatorStyle = .none
         tableView.rowHeight = kWidth/16.0*9.0
         tableView.tableFooterView = UIView()
@@ -58,6 +64,10 @@ class FavoriteViewController: UIViewController, UITableViewDataSource, UITableVi
         alert.addAction(ok)
         
         present(alert, animated: true, completion: nil)
+    }
+    
+    func popViewController(){
+        _ = navigationController?.popViewController(animated: true)
     }
 }
 
