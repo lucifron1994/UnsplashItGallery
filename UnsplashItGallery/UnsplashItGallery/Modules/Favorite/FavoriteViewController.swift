@@ -14,15 +14,25 @@ class FavoriteViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var deleteBarItem: UIBarButtonItem!
     
     private let dbHelper = DataBaseHelper.shareHelper
-    private var dataList:[ImageModel] = [ImageModel]()
+    fileprivate var dataList:[ImageModel] = [ImageModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        initDBData()
         setUI()
     }
     
+    private func initDBData(){
+        dbHelper.createFavoriteTable()
+        dbHelper.getFavoriteData { (models) in
+            dataList = models
+        }
+    }
+    
     private func setUI(){
+        tableView.separatorStyle = .none
+        tableView.rowHeight = kWidth/16.0*9.0
         tableView.tableFooterView = UIView()
     }
 
@@ -55,15 +65,19 @@ class FavoriteViewController: UIViewController, UITableViewDataSource, UITableVi
 extension FavoriteViewController{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return dataList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-        cell.textLabel?.text = "Star"
-        return cell
+        let cell:MainTableViewCell? = tableView.dequeueReusableCell(withIdentifier: kCellID, for: indexPath as IndexPath) as? MainTableViewCell
+        
+        if (indexPath.row < self.dataList.count){
+            let model = self.dataList[indexPath.row]
+            cell?.setImageDataSource(model)
+        }
+
+        return cell!
     }
-    
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .default, title: "Delete") { (action, indexPath) in

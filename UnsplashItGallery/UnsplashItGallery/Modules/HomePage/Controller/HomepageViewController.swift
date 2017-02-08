@@ -13,7 +13,7 @@ import SnapKit
 
 
 private let kToPhotoBrowserSegue = "photoBrowserSegue"
-private let kCellID = "imageCell"
+let kCellID = "imageCell"
 
 
 class HomepageViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{

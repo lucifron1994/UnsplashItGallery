@@ -136,6 +136,7 @@ class DataBaseHelper: NSObject {
                 
                 images.append(image)
             }
+            rs.close()
             completion(images)
         }
     }
