@@ -24,7 +24,7 @@ class HomepageViewModel: NSObject {
         dbHelper.createHomepageTable()
         
         //读取数据
-        dbHelper.getDataBaseData { (models) in
+        dbHelper.getHomepageData { (models) in
             imagesList = models
         }
     }
@@ -61,7 +61,7 @@ class HomepageViewModel: NSObject {
                     self.imagesList = Array(tempArray)
                 
                     self.dbHelper.deleteHomepageTable()
-                    self.dbHelper.insertItems(models: self.imagesList)
+                    self.dbHelper.insertItemsIntoHomepageTable(models: self.imagesList)
                 
                     completion(true, true)
                 }else{
@@ -95,7 +95,7 @@ class HomepageViewModel: NSObject {
                     for imageURL in JSON{
                         let model : ImageModel = JSONDeserializer.deserializeFrom(dict: imageURL as? NSDictionary)!
                         self.imagesList.append(model)
-                        self.dbHelper .insertItem(model: model)
+                        self.dbHelper.insertItemIntoHomepageTable(model: model)
                     }
                     
                     completion(true)

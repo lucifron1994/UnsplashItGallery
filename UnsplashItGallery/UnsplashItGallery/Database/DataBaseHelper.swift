@@ -49,45 +49,18 @@ class DataBaseHelper: NSObject {
         createHomepageTable()
     }
     
-    func insertItem(model : ImageModel){
-        if (model.id?.isEmpty)! || (model.created_at?.isEmpty)! {
-            return
-        }
-        let sql = "insert into \(tableName_homepage) (imageId, created_at, thumb, small, regular, full, raw) values (?,?,?,?,?,?,?);"
-        
-        let arg : [String] = [model.id!, model.created_at!, (model.urls?.thumb)!, (model.urls?.small)!, (model.urls?.regular)!, (model.urls?.full)!,(model.urls?.raw)!]
-        if !((database?.executeUpdate(sql, withArgumentsIn: arg))!) {
-            print("插入数据失败 homepage_table")
-        }
+    func insertItemIntoHomepageTable(model : ImageModel){
+        insertItem(withTable: tableName_homepage, model: model)
     }
     
-    func insertItems(models : [ImageModel]){
+    func insertItemsIntoHomepageTable(models : [ImageModel]){
         for model in models {
-            insertItem(model: model)
+            insertItem(withTable: tableName_homepage, model: model)
         }
     }
     
-    func getDataBaseData( completion : (_ images:[ImageModel])->()){
-        
-        let sql = "select * from \(tableName_homepage);"
-        if let rs = database?.executeQuery(sql, withArgumentsIn: nil) {
-            var images:[ImageModel] = []
-            while rs.next() {
-                let image = ImageModel()
-                image.id = rs.string(forColumn: "imageId")
-                image.created_at = rs.string(forColumn: "created_at")
-                let urls = ImageURLModel()
-                urls.thumb = rs.string(forColumn: "thumb")
-                urls.small = rs.string(forColumn: "small")
-                urls.regular = rs.string(forColumn: "regular")
-                urls.full = rs.string(forColumn: "full")
-                urls.raw = rs.string(forColumn: "raw")
-                image.urls = urls
-                
-                images.append(image)
-            }
-            completion(images)
-        }
+    func getHomepageData( completion : (_ images:[ImageModel])->()){
+        getDataFromDB(withTable: tableName_homepage, completion: completion)
     }
     
     //MARK: - homepage_table
@@ -98,6 +71,14 @@ class DataBaseHelper: NSObject {
     func deleteFavoriteTable(){
         deleteTable(with: tableName_favorite)
         createFavoriteTable()
+    }
+    
+    func insertItemIntoFavoriteTable(model : ImageModel){
+        insertItem(withTable: tableName_favorite, model: model)
+    }
+    
+    func getFavoriteData( completion : (_ images:[ImageModel])->()){
+        getDataFromDB(withTable: tableName_favorite, completion: completion)
     }
     
     //MARK: - Common
@@ -123,5 +104,40 @@ class DataBaseHelper: NSObject {
         
     }
     
+    private func insertItem(withTable tableName:String, model : ImageModel){
+        if (model.id?.isEmpty)! || (model.created_at?.isEmpty)! {
+            return
+        }
+        let sql = "insert into \(tableName) (imageId, created_at, thumb, small, regular, full, raw) values (?,?,?,?,?,?,?);"
+        
+        let arg : [String] = [model.id!, model.created_at!, (model.urls?.thumb)!, (model.urls?.small)!, (model.urls?.regular)!, (model.urls?.full)!,(model.urls?.raw)!]
+        if !((database?.executeUpdate(sql, withArgumentsIn: arg))!) {
+            print("插入数据失败 homepage_table")
+        }
+    }
+    
+    
+    private func getDataFromDB(withTable tableName:String, completion : (_ images:[ImageModel])->()){
+        
+        let sql = "select * from \(tableName);"
+        if let rs = database?.executeQuery(sql, withArgumentsIn: nil) {
+            var images:[ImageModel] = []
+            while rs.next() {
+                let image = ImageModel()
+                image.id = rs.string(forColumn: "imageId")
+                image.created_at = rs.string(forColumn: "created_at")
+                let urls = ImageURLModel()
+                urls.thumb = rs.string(forColumn: "thumb")
+                urls.small = rs.string(forColumn: "small")
+                urls.regular = rs.string(forColumn: "regular")
+                urls.full = rs.string(forColumn: "full")
+                urls.raw = rs.string(forColumn: "raw")
+                image.urls = urls
+                
+                images.append(image)
+            }
+            completion(images)
+        }
+    }
     
 }
